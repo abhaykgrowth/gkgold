@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GK Gold — Retail Operations Automation Architecture v1.0</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;color:#1a1a2e;padding:28px 22px 60px;}
+
+/* ─── Header ─────────────────────────────────────── */
+.header{background:linear-gradient(135deg,#0d1b2a 0%,#0f3460 100%);border-radius:16px;padding:28px 32px;display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
+.header h1{color:#C9A84C;font-size:22px;font-weight:800;margin-bottom:6px;}
+.header .sub{color:#90b4d0;font-size:12.5px;margin-top:4px;}
+.hbadges{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+.hbadge{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:10px 14px;min-width:140px;text-align:center;}
+.hbadge .htitle{color:#90b4d0;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
+.hbadge .hval{color:white;font-size:11.5px;font-weight:600;margin-top:3px;}
+
+/* ─── Insight banner ─────────────────────────────── */
+.insight-banner{background:linear-gradient(90deg,#0066cc,#005bb5);border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.insight-banner .icon{font-size:24px;flex-shrink:0;}
+.insight-banner .body{flex:1;}
+.insight-banner .body p{color:white;font-size:12px;line-height:1.6;margin-bottom:8px;}
+.itags{display:flex;flex-wrap:wrap;gap:6px;}
+.itag{background:rgba(255,255,255,0.15);border-radius:20px;padding:4px 10px;color:white;font-size:10.5px;font-weight:700;}
+
+/* ─── Threshold card ─────────────────────────────── */
+.thresh-card{background:white;border-radius:12px;overflow:hidden;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,0.08);}
+.thresh-head{background:linear-gradient(90deg,#1b5e20,#2e7d32);padding:14px 20px;color:white;font-weight:700;font-size:13px;}
+.thresh-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;}
+.thresh-col{padding:20px;border-right:1px solid #f0f0f0;}
+.thresh-col:last-child{border-right:none;}
+.thresh-num{font-size:28px;font-weight:900;color:#1b5e20;margin-bottom:4px;}
+.thresh-label{font-weight:700;font-size:12px;color:#333;margin-bottom:8px;}
+.thresh-desc{font-size:11px;color:#555;line-height:1.5;}
+.thresh-note{background:#e8f5e9;border-left:3px solid #4caf50;border-radius:0 4px 4px 0;padding:6px 10px;margin-top:8px;font-size:10.5px;color:#1b5e20;font-weight:600;}
+.thresh-footer{background:#f5f5f5;padding:10px 20px;font-size:11px;color:#555;text-align:center;border-top:1px solid #eee;}
+
+/* ─── Legend ─────────────────────────────────────── */
+.legend{background:white;border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.legend strong{font-size:11px;color:#555;margin-right:4px;}
+.ldot{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#444;}
+.ldot span{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+.green{background:#66bb6a;}
+.yellow{background:#ffca28;}
+.grey{background:#bdbdbd;}
+.red-dot{background:#e53935;}
+
+/* ─── Agent overview ─────────────────────────────── */
+.agent-overview{background:white;border-radius:14px;overflow:hidden;margin-bottom:24px;box-shadow:0 4px 20px rgba(0,0,0,0.08);}
+.agent-head{background:linear-gradient(90deg,#1a237e,#283593);padding:16px 24px;color:#C9A84C;font-weight:800;font-size:14px;}
+.agent-head span{color:rgba(255,255,255,0.6);font-size:12px;font-weight:400;margin-left:10px;}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;}
+.agent-card{padding:18px 20px;border-right:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;}
+.agent-card:hover{background:#fafbff;}
+.agent-icon{font-size:22px;margin-bottom:8px;}
+.agent-name{font-weight:700;font-size:12px;color:#1a237e;margin-bottom:5px;}
+.agent-desc{font-size:11px;color:#555;line-height:1.5;margin-bottom:6px;}
+.agent-feeds{font-size:10px;color:#888;font-style:italic;}
+
+/* ─── Sections ───────────────────────────────────── */
+.section{background:white;border-radius:14px;overflow:hidden;margin-bottom:24px;box-shadow:0 4px 20px rgba(0,0,0,0.08);}
+.sec-head{padding:14px 20px;display:flex;align-items:center;gap:12px;color:white;}
+.num{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;}
+.hicon{font-size:20px;}
+.sec-title{flex:1;font-weight:700;font-size:14px;}
+.auto-badge{background:rgba(255,255,255,0.2);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;}
+.sec-body{padding:20px;}
+
+/* Section colours */
+.s1 .sec-head{background:linear-gradient(90deg,#0052a3,#0099ff);}
+.s2 .sec-head{background:linear-gradient(90deg,#880e4f,#c2185b);}
+.s3 .sec-head{background:linear-gradient(90deg,#bf360c,#f4511e);}
+.s4 .sec-head{background:linear-gradient(90deg,#1b5e20,#2e7d32);}
+.s5 .sec-head{background:linear-gradient(90deg,#4a148c,#8e24aa);}
+.s6 .sec-head{background:linear-gradient(90deg,#0a5c45,#00897b);}
+.s7 .sec-head{background:linear-gradient(90deg,#1a237e,#1565c0);}
+.s8 .sec-head{background:linear-gradient(90deg,#37474f,#546e7a);}
+
+/* ─── Flow ───────────────────────────────────────── */
+.flow-wrap{overflow-x:auto;padding-bottom:8px;}
+.flow{display:flex;align-items:stretch;gap:0;min-width:max-content;}
+.step{position:relative;padding-right:28px;}
+.step:not(:last-child)::after{content:'▶';position:absolute;right:4px;top:50%;transform:translateY(-50%);color:#c0c8d0;font-size:14px;}
+.step-box{border-radius:11px;padding:12px 14px;min-height:90px;min-width:148px;max-width:170px;transition:transform 0.15s;cursor:default;}
+.step-box:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.12);}
+.step-icon{font-size:20px;margin-bottom:6px;}
+.step-label{font-size:11px;font-weight:700;color:#1a1a2e;margin-bottom:3px;line-height:1.3;}
+.step-sub{font-size:9.5px;color:#607d8b;margin-top:4px;line-height:1.4;}
+.step-tech{display:inline-block;background:#e3f2fd;color:#1565c0;border-radius:10px;padding:2px 7px;font-size:9px;font-weight:700;margin-top:5px;}
+.step-tag{display:inline-block;border-radius:3px;padding:2px 6px;font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.3px;margin-top:4px;}
+
+.auto{background:#e8f5e9;border:1.5px solid #66bb6a;}
+.semi{background:#fff8e1;border:1.5px solid #ffca28;}
+.man{background:#ecf0f1;border:1.5px solid #bdc3c7;}
+.crit{background:#fce4ec;border:1.5px solid #e53935;}
+
+.tag-auto{background:#c8e6c9;color:#1b5e20;}
+.tag-semi{background:#fff9c4;color:#f57f17;}
+.tag-man{background:#eceff1;color:#455a64;}
+.tag-crit{background:#ffcdd2;color:#b71c1c;}
+.tag-dead{background:#ff8f00;color:white;}
+
+/* ─── Decision diamonds ──────────────────────────── */
+.diamond-row{display:flex;gap:16px;flex-wrap:wrap;margin:16px 0 8px;}
+.diamond{background:#fffde7;border:1.5px solid #fdd835;border-radius:8px;padding:12px 16px;flex:1;min-width:200px;}
+.diamond::before{content:'Decision: ';font-weight:800;font-size:10px;color:#f57f17;display:block;margin-bottom:4px;}
+.diamond p{font-size:11px;font-weight:700;color:#333;margin-bottom:8px;}
+.byes{display:inline-block;background:#e8f5e9;color:#2e7d32;border-radius:4px;padding:3px 8px;font-size:10px;font-weight:700;margin-right:8px;}
+.bno{display:inline-block;background:#ffebee;color:#c62828;border-radius:4px;padding:3px 8px;font-size:10px;font-weight:700;}
+
+/* ─── Notes ──────────────────────────────────────── */
+.note{padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:11.5px;line-height:1.6;}
+.note.blue{background:#e3f2fd;border-left:4px solid #1565c0;color:#1a237e;}
+.note.green{background:#e8f5e9;border-left:4px solid #2e7d32;color:#1b5e20;}
+.note.amber{background:#fff8e1;border-left:4px solid #ff8f00;color:#e65100;}
+.note.red{background:#ffebee;border-left:4px solid #c62828;color:#b71c1c;}
+.note.grey{background:#f5f5f5;border-left:4px solid #9e9e9e;color:#424242;}
+
+/* ─── Auto-panel ─────────────────────────────────── */
+.auto-panel{background:#f3f8ff;border:1px solid #90caf9;border-radius:10px;padding:16px;margin-top:16px;}
+.auto-panel h4{font-size:12px;font-weight:800;color:#1565c0;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.auto-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;}
+.auto-card{background:white;border:1px solid #bbdefb;border-radius:8px;padding:12px;}
+.auto-card-title{font-size:11px;font-weight:700;color:#1565c0;margin-bottom:6px;}
+.auto-card p{font-size:10.5px;color:#444;line-height:1.5;}
+.tech-pill{display:inline-block;background:#e3f2fd;color:#1565c0;border-radius:10px;padding:2px 8px;font-size:9px;font-weight:700;margin-top:5px;margin-right:4px;}
+
+/* ─── Roadmap ────────────────────────────────────── */
+.roadmap{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:8px;}
+.rm-card{border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.rm-head{padding:12px 16px;font-weight:800;font-size:12px;color:white;}
+.rm-now .rm-head{background:#c62828;}
+.rm-p2 .rm-head{background:#1565c0;}
+.rm-p3 .rm-head{background:#1b5e20;}
+.rm-tgt .rm-head{background:#6a1b9a;}
+.rm-body{background:white;padding:12px 16px;}
+.rm-body ul{padding-left:14px;}
+.rm-body li{font-size:11px;color:#444;margin-bottom:5px;line-height:1.4;}
+
+/* ─── Footer ─────────────────────────────────────── */
+footer{text-align:center;margin-top:32px;color:#888;font-size:11px;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <h1>GK Gold Corporation — Retail Operations Automation Architecture</h1>
+    <p class="sub">AI Agent Design &amp; Automated Process Map &nbsp;·&nbsp; All Retail Services &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; May 2026</p>
+    <p class="sub">ACN 641 370 505 &nbsp;·&nbsp; GK Gold Corporation Pty Ltd &amp; Australian Metal Securities (AMS)</p>
+  </div>
+  <div>
+    <div class="hbadges">
+      <div class="hbadge"><div class="htitle">Directors</div><div class="hval">Sukh &amp; Gagan</div></div>
+      <div class="hbadge"><div class="htitle">Consultant</div><div class="hval">Abhay Khurana</div></div>
+      <div class="hbadge"><div class="htitle">Systems</div><div class="hval">Xero · CashNet · Win Gold</div></div>
+      <div class="hbadge"><div class="htitle">Integrations</div><div class="hval">GBG KYC · NAB · AusPost</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- INSIGHT BANNER -->
+<div class="insight-banner">
+  <div class="icon">AI</div>
+  <div class="body">
+    <p>This map covers all four GK Gold retail services — Scrap/Cash for Gold, Bullion Buying &amp; Selling, Gold Loan/Pawnbroking (AMS), and Storage. Eight AI agents are proposed to automate the highest-friction, highest-risk areas: KYC intake, live pricing, transaction processing, inventory management, AML/CTF integration, loan lifecycle, storage management, and daily reconciliation reporting. The system connects Xero (retail), CashNet (loans), and Win Gold (storage) under a unified automation layer.</p>
+    <div class="itags">
+      <span class="itag">GBG greenID KYC</span>
+      <span class="itag">Live Spot Price API</span>
+      <span class="itag">Xero Integration</span>
+      <span class="itag">CashNet (Loans)</span>
+      <span class="itag">Win Gold (Storage)</span>
+      <span class="itag">NAB Banking</span>
+      <span class="itag">AusPost Shipping</span>
+      <span class="itag">AML/CTF Co-Pilot</span>
+    </div>
+  </div>
+</div>
+
+<!-- THRESHOLDS -->
+<div class="thresh-card">
+  <div class="thresh-head">Compliance Threshold Reference — Know Before Every Transaction</div>
+  <div class="thresh-grid">
+    <div class="thresh-col">
+      <div class="thresh-num">$5,000</div>
+      <div class="thresh-label">CDD Trigger — Bullion Only</div>
+      <div class="thresh-desc">Buying or selling any bullion (gold bars, coins, silver bars) for $5,000 or more triggers CDD/KYC under s39E AML/CTF Act. Applies to walk-in and online sales.</div>
+      <div class="thresh-note">Unique to bullion dealers. Most assume $10,000 — it is $5,000.</div>
+    </div>
+    <div class="thresh-col">
+      <div class="thresh-num">$10,000</div>
+      <div class="thresh-label">CDD Trigger — Scrap/Cash for Gold</div>
+      <div class="thresh-desc">Standard AML/CTF CDD threshold for scrap gold/silver transactions. Cash threshold only — EFT does not trigger. Also: $10,000 cash = TTR obligation for ALL services.</div>
+      <div class="thresh-note">All GK Gold designated services — TTR within 10 business days.</div>
+    </div>
+    <div class="thresh-col">
+      <div class="thresh-num">$0</div>
+      <div class="thresh-label">SMR — No Threshold</div>
+      <div class="thresh-desc">Suspicious Matter Reports have NO minimum dollar amount. Any suspicious behaviour, regardless of transaction value, must be escalated to the AML/CTF Compliance Officer.</div>
+      <div class="thresh-note">Report suspicion, not amount. Tipping-off is a criminal offence.</div>
+    </div>
+  </div>
+  <div class="thresh-footer">$5,000 = CDD for bullion &nbsp;·&nbsp; $10,000 = CDD for scrap &nbsp;·&nbsp; $10,000 cash = TTR for all services &nbsp;·&nbsp; No threshold for SMR &nbsp;·&nbsp; 2% cash surcharge applies across all services</div>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <strong>Automation Level:</strong>
+  <div class="ldot"><span class="green"></span> Fully Automated — AI/system does it</div>
+  <div class="ldot"><span class="yellow"></span> Semi-Automated — AI assists, human reviews</div>
+  <div class="ldot"><span class="grey"></span> Manual — Staff action required</div>
+  <div class="ldot"><span class="red-dot"></span> Critical — Mandatory compliance step</div>
+</div>
+
+<!-- AGENT OVERVIEW -->
+<div class="agent-overview">
+  <div class="agent-head">AI Agent Architecture <span>— 8 Agents for Retail Operations</span></div>
+  <div class="agent-grid">
+    <div class="agent-card">
+      <div class="agent-icon">ID</div>
+      <div class="agent-name">Agent 1 — KYC Intake Agent</div>
+      <div class="agent-desc">Triggers GBG greenID on customer intake. Collects data from POS/website, submits for verification, receives result, writes outcome and risk rating to compliance register automatically.</div>
+      <div class="agent-feeds">Feeds → Agent 5 (AML/CTF), Agent 3 (Xero)</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">P</div>
+      <div class="agent-name">Agent 2 — Live Pricing Agent</div>
+      <div class="agent-desc">Pulls live spot price via API every 60 seconds. Auto-calculates buy/sell prices, loan values, and pool allocation pricing. Eliminates manual spot price checking and CashNet silent failures.</div>
+      <div class="agent-feeds">Feeds → Agent 3 (Xero), Agent 6 (Loans)</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">T</div>
+      <div class="agent-name">Agent 3 — Transaction Agent</div>
+      <div class="agent-desc">Auto-creates Xero invoices and purchase orders on transaction confirmation. Records payment method, applies SKU codes, manages the quote-to-invoice lifecycle for online orders.</div>
+      <div class="agent-feeds">Feeds → Agent 5 (AML flags), Agent 8 (Reports)</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">Box</div>
+      <div class="agent-name">Agent 4 — Inventory Agent</div>
+      <div class="agent-desc">Tracks crude/fresh stock levels across all branches. Flags when crud stock is available for resale. Monitors vault contents against inventory register. Alerts on low stock or discrepancies.</div>
+      <div class="agent-feeds">Feeds → Agent 3 (Xero), Agent 8 (Reports)</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">Shield</div>
+      <div class="agent-name">Agent 5 — AML/CTF Co-Pilot</div>
+      <div class="agent-desc">Monitors all transactions for threshold triggers ($5K/$10K). Flags TTR obligations. Detects structuring patterns. Escalates to Compliance Officer. Interfaces directly with compliance Agent 2/3/4.</div>
+      <div class="agent-feeds">Feeds → Compliance SOPs (TTR/SMR), Agent 8</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">Lock</div>
+      <div class="agent-name">Agent 6 — Loan Lifecycle Agent</div>
+      <div class="agent-desc">Manages CashNet loan status transitions (Active → Default → Expired → Acquired). Sends automated SMS at all reminder milestones. Auto-applies storage fees on default. Triggers acquisition workflow at Day 97.</div>
+      <div class="agent-feeds">Feeds → Agent 5 (AML), Agent 8 (Reports)</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">Vault</div>
+      <div class="agent-name">Agent 7 — Storage Agent</div>
+      <div class="agent-desc">Manages Win Gold storage records for both allocated and pool allocation. Generates Bailor-Bailee agreements, triggers e-sign workflow, manages recurring billing, produces FY holdings reports and monthly statements.</div>
+      <div class="agent-feeds">Feeds → Agent 1 (KYC), Agent 8 (Reports)</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">Chart</div>
+      <div class="agent-name">Agent 8 — Reporting Agent</div>
+      <div class="agent-desc">Auto-generates daily reconciliation reports (cash, EFT, Xero vs NAB). Produces transaction registers per lot/branch. Generates management dashboard. Triggers end-of-day sign-off workflow.</div>
+      <div class="agent-feeds">Feeds → Directors dashboard, Compliance CO</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 1: SCRAP / CASH FOR GOLD -->
+<div class="section s1">
+  <div class="sec-head">
+    <div class="num">1</div>
+    <div class="hicon">G</div>
+    <div class="sec-title">Cash for Gold / Scrap Buying (SOP-RO-001)</div>
+    <div class="auto-badge">~55% Automated</div>
+  </div>
+  <div class="sec-body">
+    <div class="flow-wrap"><div class="flow">
+      <div class="step"><div class="step-box man"><div class="step-icon">Person</div><div class="step-label">Customer Arrives</div><div class="step-sub">Walk-in with scrap gold/silver</div><span class="step-tag tag-man">Manual trigger</span></div></div>
+      <div class="step"><div class="step-box man"><div class="step-icon">Search</div><div class="step-label">Suspicious Activity Check</div><div class="step-sub">Stolen goods? Intoxicated? Age OK?</div><span class="step-tag tag-crit">s71 / s69 Act</span></div></div>
+      <div class="step"><div class="step-box man"><div class="step-icon">Scale</div><div class="step-label">Item Assessment</div><div class="step-sub">Sort by karat, weigh, deduct stones</div><span class="step-tag tag-man">Staff</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">$</div><div class="step-label">Auto-Price Calculation</div><div class="step-sub">Live spot via API (Agent 2)</div><div class="step-tech">Agent 2</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box semi"><div class="step-icon">Quote</div><div class="step-label">Quote Presented</div><div class="step-sub">2% cash discount / full EFT price</div><span class="step-tag tag-semi">Semi</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">ID</div><div class="step-label">KYC Check (if &gt;=$10K)</div><div class="step-sub">Agent 1 triggers GBG greenID</div><div class="step-tech">Agent 1 · GBG</div><span class="step-tag tag-crit">CDD</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Doc</div><div class="step-label">Xero PO Auto-Created</div><div class="step-sub">SKU: SG+karat. Weight, price, ref</div><div class="step-tech">Agent 3 · Xero</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box man"><div class="step-icon">Sign</div><div class="step-label">Both Parties Sign PO</div><div class="step-sub">Two copies. Customer keeps one.</div><span class="step-tag tag-man">Manual</span></div></div>
+      <div class="step"><div class="step-box man"><div class="step-icon">Cash</div><div class="step-label">Payment Made</div><div class="step-sub">Cash or EFT. PO converts to Bill.</div><span class="step-tag tag-man">Manual</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Report</div><div class="step-label">Register Auto-Generated</div><div class="step-sub">Agent 8 exports by lot and branch</div><div class="step-tech">Agent 8</div><span class="step-tag tag-auto">Auto</span></div></div>
+    </div></div>
+    <div class="diamond-row">
+      <div class="diamond"><p>Cash transaction &gt;= $10,000?</p><span class="byes">YES — TTR required (10 business days)</span><span class="bno">NO — proceed normally</span></div>
+      <div class="diamond"><p>Suspicious circumstances detected?</p><span class="byes">YES — Refuse. Alert Compliance Officer. Consider SMR.</span><span class="bno">NO — proceed to quote</span></div>
+    </div>
+    <div class="note amber">SKU format for scrap: SG + karat code (SG08K = 8K, SG09K = 9K, SG18K = 18K, etc.). Weight-based, not piece-based. 2% cash surcharge = 0.98 multiplier on pricing. RCTI cycle applies when dealing with business/trade sellers.</div>
+    <div class="auto-panel">
+      <h4>Agent 2 — Live Pricing Auto-Calculation</h4>
+      <div class="auto-grid">
+        <div class="auto-card"><div class="auto-card-title">Live Spot API Feed</div><p>Agent 2 pulls live gold/silver spot price every 60 seconds from a live price API. Eliminates manual price checking. Staff see live price on screen, Agent calculates automatically.</p><span class="tech-pill">Spot Price API</span></div>
+        <div class="auto-card"><div class="auto-card-title">Per-Karat Calculation</div><p>Input: weight per karat group. Output: per-karat value and total. Applies 2% cash discount automatically if payment method = cash. Staff confirm, cannot override formula.</p><span class="tech-pill">Agent 2</span></div>
+        <div class="auto-card"><div class="auto-card-title">Reference Number Generation</div><p>Auto-generates reference: [Branch Code]-[Sequential PO Number]. No more manual Store ID + Transaction + Lot + Initials. Consistent across all branches.</p><span class="tech-pill">Agent 3</span></div>
+        <div class="auto-card"><div class="auto-card-title">AML Threshold Monitor</div><p>Agent 5 monitors every transaction. Detects: single &gt;=$10K cash (TTR flag), multiple linked transactions totalling &gt;=$10K, unusual patterns vs customer history.</p><span class="tech-pill">Agent 5</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: BULLION SELLING -->
+<div class="section s2">
+  <div class="sec-head">
+    <div class="num">2</div>
+    <div class="hicon">Bar</div>
+    <div class="sec-title">Bullion Selling — Walk-In &amp; Online (SOP-RO-002 / RO-003)</div>
+    <div class="auto-badge">~65% Automated</div>
+  </div>
+  <div class="sec-body">
+    <div class="flow-wrap"><div class="flow">
+      <div class="step"><div class="step-box man"><div class="step-icon">Person</div><div class="step-label">Customer Request</div><div class="step-sub">Walk-in or online order</div><span class="step-tag tag-man">Trigger</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Search</div><div class="step-label">Crud Stock Check</div><div class="step-sub">Agent 4 checks crud before fresh</div><div class="step-tech">Agent 4</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">$</div><div class="step-label">Live Price Quote</div><div class="step-sub">Walk-in: immediate. Online: 1-hour hold</div><div class="step-tech">Agent 2</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">ID</div><div class="step-label">KYC Check (if &gt;=$5K)</div><div class="step-sub">GBG greenID via Agent 1</div><div class="step-tech">Agent 1 · GBG</div><span class="step-tag tag-crit">CDD $5K</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Money</div><div class="step-label">Payment Verification</div><div class="step-sub">NAB monitor. EFT/Osko auto-matched</div><div class="step-tech">Agent 3 · NAB</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Invoice</div><div class="step-label">Xero Invoice Auto-Created</div><div class="step-sub">SKU, pricing, customer, method</div><div class="step-tech">Agent 3</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box semi"><div class="step-icon">Pack</div><div class="step-label">Pick, Pack &amp; Fulfil</div><div class="step-sub">Velvet pouch. Verify vs invoice.</div><span class="step-tag tag-semi">Semi</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Status</div><div class="step-label">Status Auto-Updated</div><div class="step-sub">Awaiting → Collected/Shipped</div><div class="step-tech">Agent 3 · Xero</div><span class="step-tag tag-auto">Auto</span></div></div>
+    </div></div>
+    <div class="diamond-row">
+      <div class="diamond"><p>Online order — payment received within 1-hour hold?</p><span class="byes">YES — proceed with order</span><span class="bno">NO — Quote expires. Customer must re-request. Do NOT honour expired price.</span></div>
+      <div class="diamond"><p>Fulfilment method?</p><span class="byes">Shipping — proceed to Section 3 (Fulfilment)</span><span class="bno">Click &amp; Collect — hold in safe, verify ID on collection</span></div>
+    </div>
+    <div class="note blue">SKU format — Crud (buyback): K + G/S + B/C + size + brand. Fresh stock: G/S + CB/MB/GC + size + brand. Example: KGB1OZTPM = Crud Gold Bar 1oz Perth Mint. Staff always offer Gold Secure branded products FIRST — primary offering.</div>
+    <div class="auto-panel">
+      <h4>Online 1-Hour Price Hold System</h4>
+      <div class="auto-grid">
+        <div class="auto-card"><div class="auto-card-title">Quote Engine</div><p>Agent 2 generates time-stamped quote on order placement. Countdown timer displayed to customer. At 59 minutes: automated reminder SMS/email. At expiry: quote locked, customer notified.</p><span class="tech-pill">Agent 2</span></div>
+        <div class="auto-card"><div class="auto-card-title">NAB Payment Monitor</div><p>Agent 3 monitors NAB Osko/EFT incomings every 5 minutes. On match (amount + reference): auto-confirms order, triggers KYC check if &gt;=$5K, creates Xero invoice.</p><span class="tech-pill">Agent 3 · NAB API</span></div>
+        <div class="auto-card"><div class="auto-card-title">AML Threshold Monitor</div><p>Agent 5 flags: cash &gt;=$5K (CDD), &gt;=$10K (TTR). Online orders are EFT only — no TTR for EFT. But Agent 5 still checks customer against sanctions/PEP via GBG ongoing screening.</p><span class="tech-pill">Agent 5</span></div>
+        <div class="auto-card"><div class="auto-card-title">Inventory Reservation</div><p>On order placement, Agent 4 reserves the stock immediately. If payment not received within 1 hour, stock is released back to available inventory automatically.</p><span class="tech-pill">Agent 4</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: FULFILMENT -->
+<div class="section s3">
+  <div class="sec-head">
+    <div class="num">3</div>
+    <div class="hicon">Box</div>
+    <div class="sec-title">Order Fulfilment — Shipping &amp; Click &amp; Collect (SOP-RO-005)</div>
+    <div class="auto-badge">~50% Automated</div>
+  </div>
+  <div class="sec-body">
+    <div class="flow-wrap"><div class="flow">
+      <div class="step"><div class="step-box auto"><div class="step-icon">Check</div><div class="step-label">Payment Confirmed</div><div class="step-sub">Agent 3 confirms before pick</div><div class="step-tech">Agent 3</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box man"><div class="step-icon">Box</div><div class="step-label">Pick &amp; Verify</div><div class="step-sub">Product matches invoice exactly</div><span class="step-tag tag-man">Manual</span></div></div>
+      <div class="step"><div class="step-box man"><div class="step-icon">Tape</div><div class="step-label">Security Packaging</div><div class="step-sub">Contents NOT identifiable on outside</div><span class="step-tag tag-crit">Security</span></div></div>
+      <div class="step"><div class="step-box semi"><div class="step-icon">Shield</div><div class="step-label">Insurance Selection</div><div class="step-sub">Customer choice. Apply if selected.</div><span class="step-tag tag-semi">Optional</span></div></div>
+      <div class="step"><div class="step-box man"><div class="step-icon">Post</div><div class="step-label">Lodge at AusPost</div><div class="step-sub">Express Post + Signature Required</div><span class="step-tag tag-crit">Sig required</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Track</div><div class="step-label">Tracking Auto-Attached</div><div class="step-sub">Agent 3 attaches to Xero invoice</div><div class="step-tech">Agent 3</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">SMS</div><div class="step-label">Customer Notified</div><div class="step-sub">Auto-send tracking details</div><div class="step-tech">Agent 3</div><span class="step-tag tag-auto">Auto</span></div></div>
+    </div></div>
+    <div class="note red">NEVER ship without Express Post Signature Required. Shipping cost is CUSTOMER-PAID — add to invoice at checkout. Insurance is OPTIONAL — customer selects and pays. If no insurance selected, ship without — customer's risk. Never use standard untracked post for bullion.</div>
+  </div>
+</div>
+
+<!-- SECTION 4: BULLION BUYING -->
+<div class="section s4">
+  <div class="sec-head">
+    <div class="num">4</div>
+    <div class="hicon">Buy</div>
+    <div class="sec-title">Bullion Buying / Crud Buyback (SOP-RO-002)</div>
+    <div class="auto-badge">~60% Automated</div>
+  </div>
+  <div class="sec-body">
+    <div class="flow-wrap"><div class="flow">
+      <div class="step"><div class="step-box man"><div class="step-icon">Person</div><div class="step-label">Customer Arrives</div><div class="step-sub">Selling bullion back to GK Gold</div><span class="step-tag tag-man">Walk-in</span></div></div>
+      <div class="step"><div class="step-box man"><div class="step-icon">Check</div><div class="step-label">Item Assessment</div><div class="step-sub">Type, brand, weight, authenticity</div><span class="step-tag tag-man">Staff</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">$</div><div class="step-label">Auto-Price (per piece)</div><div class="step-sub">Live spot × piece price (not weight)</div><div class="step-tech">Agent 2</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">ID</div><div class="step-label">KYC Check (if &gt;=$5K)</div><div class="step-sub">GBG greenID — $5K bullion threshold</div><div class="step-tech">Agent 1</div><span class="step-tag tag-crit">CDD</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Cart</div><div class="step-label">Xero PO — Crud SKU</div><div class="step-sub">K+G/S+B/C+size+brand format</div><div class="step-tech">Agent 3</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box man"><div class="step-icon">Sign</div><div class="step-label">Both Sign PO</div><div class="step-sub">Two copies. Customer keeps one.</div><span class="step-tag tag-man">Manual</span></div></div>
+      <div class="step"><div class="step-box man"><div class="step-icon">Pay</div><div class="step-label">Payment &amp; Bill</div><div class="step-sub">Cash/EFT. PO converts to Bill.</div><span class="step-tag tag-man">Manual</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Stock</div><div class="step-label">Crud Inventory Updated</div><div class="step-sub">Agent 4 adds to crud stock</div><div class="step-tech">Agent 4</div><span class="step-tag tag-auto">Auto</span></div></div>
+    </div></div>
+    <div class="note blue">Crud stock is preferred for resale — lower cost basis vs fresh stock. Agent 4 automatically checks and alerts staff when crud is available before recommending fresh stock. Piece-based pricing (not weight-based like scrap). $5,000 CDD threshold applies.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: GOLD LOAN -->
+<div class="section s5">
+  <div class="sec-head">
+    <div class="num">5</div>
+    <div class="hicon">Lock</div>
+    <div class="sec-title">Gold Loan / Pawnbroking — AMS (SOP-RO-006)</div>
+    <div class="auto-badge">~60% Automated (Target)</div>
+  </div>
+  <div class="sec-body">
+    <div class="flow-wrap"><div class="flow">
+      <div class="step"><div class="step-box auto"><div class="step-icon">Age</div><div class="step-label">Age &amp; Sobriety Check</div><div class="step-sub">17+ confirmed, not intoxicated</div><div class="step-tech">Agent 1 DOB check</div><span class="step-tag tag-crit">s69 Act</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">ID</div><div class="step-label">KYC — GBG greenID</div><div class="step-sub">All pawn loans — s70 Act</div><div class="step-tech">Agent 1 · GBG</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box man"><div class="step-icon">Gold</div><div class="step-label">Item Evaluation</div><div class="step-sub">Carat, weight, authenticity, engravings</div><span class="step-tag tag-man">Staff</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Calc</div><div class="step-label">Loan Value Auto-Calc</div><div class="step-sub">70% × (Spot/31.1035) × Purity% × Wt</div><div class="step-tech">Agent 2 · API</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">%</div><div class="step-label">Interest Rate Auto-Applied</div><div class="step-sub">Tier applied by loan amount</div><div class="step-tech">Agent 6</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Doc</div><div class="step-label">Pawn Agreement Generated</div><div class="step-sub">All fields: entry#, pledge#, time, fees</div><div class="step-tech">Agent 6 · CashNet</div><span class="step-tag tag-crit">s58 Act</span></div></div>
+      <div class="step"><div class="step-box man"><div class="step-icon">Sign</div><div class="step-label">Both Parties Sign</div><div class="step-sub">Customer gets copy (pawn ticket)</div><span class="step-tag tag-man">Manual</span></div></div>
+      <div class="step"><div class="step-box man"><div class="step-icon">Pay</div><div class="step-label">Payment to Customer</div><div class="step-sub">Cash &lt;$10K / EFT for all</div><span class="step-tag tag-man">Manual</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Safe</div><div class="step-label">Items Stored + SMS Cadence</div><div class="step-sub">Ziplock + loan#. Auto-SMS begins.</div><div class="step-tech">Agent 6</div><span class="step-tag tag-auto">Auto</span></div></div>
+    </div></div>
+    <div class="note red">AMS and GK Gold are SEPARATE legal entities. No formal intercompany contract yet — urgent action required. Surplus proceeds from acquisitions: held 12 months trust, then public trustee (s64 Act).</div>
+    <div class="note amber"><strong>CONFIRMED Interest Rate Structure</strong> — rates reduce as loan amount increases. All rates require lawyer sign-off against Regulation maximum:<br>
+    <table style="width:100%;font-size:10.5px;border-collapse:collapse;margin-top:8px;">
+      <tr style="background:#1C1C1C;color:#C9A84C;font-weight:700;"><td style="padding:5px 8px;">Loan Amount</td><td style="padding:5px 8px;text-align:center;">7 Day</td><td style="padding:5px 8px;text-align:center;">14 Day</td><td style="padding:5px 8px;text-align:center;">30 Day</td><td style="padding:5px 8px;text-align:center;">90 Day</td></tr>
+      <tr style="background:#FFF5F5;"><td style="padding:4px 8px;font-weight:600;">A$200+</td><td style="padding:4px 8px;text-align:center;color:#C0392B;font-weight:700;">5%</td><td style="padding:4px 8px;text-align:center;color:#C0392B;font-weight:700;">6%</td><td style="padding:4px 8px;text-align:center;color:#C0392B;font-weight:700;">10%</td><td style="padding:4px 8px;text-align:center;color:#C0392B;font-weight:700;">10%</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:600;">A$1,000+</td><td style="padding:4px 8px;text-align:center;">4%</td><td style="padding:4px 8px;text-align:center;">5%</td><td style="padding:4px 8px;text-align:center;">8%</td><td style="padding:4px 8px;text-align:center;">8%</td></tr>
+      <tr style="background:#F5F5F5;"><td style="padding:4px 8px;font-weight:600;">A$4,000+</td><td style="padding:4px 8px;text-align:center;">3.5%</td><td style="padding:4px 8px;text-align:center;">4%</td><td style="padding:4px 8px;text-align:center;">7%</td><td style="padding:4px 8px;text-align:center;">7%</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:600;">A$7,000+</td><td style="padding:4px 8px;text-align:center;">3%</td><td style="padding:4px 8px;text-align:center;">4%</td><td style="padding:4px 8px;text-align:center;">6%</td><td style="padding:4px 8px;text-align:center;">6%</td></tr>
+      <tr style="background:#F5F5F5;"><td style="padding:4px 8px;font-weight:600;">A$10,000+</td><td style="padding:4px 8px;text-align:center;">2.5%</td><td style="padding:4px 8px;text-align:center;">3%</td><td style="padding:4px 8px;text-align:center;">5%</td><td style="padding:4px 8px;text-align:center;">5%</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:600;">A$20,000+</td><td style="padding:4px 8px;text-align:center;">1.5%</td><td style="padding:4px 8px;text-align:center;">2.5%</td><td style="padding:4px 8px;text-align:center;">4%</td><td style="padding:4px 8px;text-align:center;">4%</td></tr>
+      <tr style="background:#F5F5F5;"><td style="padding:4px 8px;font-weight:600;">A$30,000+</td><td style="padding:4px 8px;text-align:center;">1.5%</td><td style="padding:4px 8px;text-align:center;">2%</td><td style="padding:4px 8px;text-align:center;color:#27AE60;font-weight:700;">3%</td><td style="padding:4px 8px;text-align:center;color:#27AE60;font-weight:700;">3%</td></tr>
+    </table>
+    </div>
+    <div class="auto-panel">
+      <h4>Agent 6 — Loan Lifecycle Auto-Management</h4>
+      <div class="auto-grid">
+        <div class="auto-card"><div class="auto-card-title">Status Auto-Transitions</div><p>Active (Day 1-90) → Default (interest unpaid 30+ days, storage fees auto-apply) → Expired (Day 90, 7-day grace) → Acquired (Day 97). Each transition auto-triggers notifications to management.</p><span class="tech-pill">Agent 6</span></div>
+        <div class="auto-card"><div class="auto-card-title">SMS Reminders (Automated)</div><p>5 days before interest due · 3 days before · 2 days after unpaid · Expiry warning · Final notice before acquisition (Day 88 — formal written notice generated). No manual triggers.</p><span class="tech-pill">Agent 6 · SMS</span></div>
+        <div class="auto-card"><div class="auto-card-title">Storage Fees Auto-Applied</div><p>On DEFAULT status trigger: storage fees auto-apply (1%/day or $10/day, whichever higher — subject to Regulation max). Auto-waived when interest paid on time at 90-day mark.</p><span class="tech-pill">Agent 6</span></div>
+        <div class="auto-card"><div class="auto-card-title">Acquisition Workflow</div><p>Day 97: system triggers acquisition checklist. Auto-generates AMS-to-GK intercompany invoice at live scrap rate. Surplus tracked for 12-month trust period with auto-alert at public trustee transfer date.</p><span class="tech-pill">Agent 6 · Agent 8</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 6: STORAGE -->
+<div class="section s6">
+  <div class="sec-head">
+    <div class="num">6</div>
+    <div class="hicon">Vault</div>
+    <div class="sec-title">Storage Service — Allocated &amp; Pool Allocation (SOP-RO-007 / 008)</div>
+    <div class="auto-badge">~55% Automated (Target)</div>
+  </div>
+  <div class="sec-body">
+    <div class="flow-wrap"><div class="flow">
+      <div class="step"><div class="step-box man"><div class="step-icon">Buy</div><div class="step-label">Customer Selects Storage</div><div class="step-sub">At checkout: allocated or pool</div><span class="step-tag tag-man">Trigger</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Type</div><div class="step-label">Storage Type Determined</div><div class="step-sub">Serialised / Un-serialised / Pool</div><div class="step-tech">Agent 7</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Doc</div><div class="step-label">Bailor-Bailee Agreement</div><div class="step-sub">Auto-generated. E-sign triggered.</div><div class="step-tech">Agent 7 · E-sign</div><span class="step-tag tag-crit">Legal req.</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Portal</div><div class="step-label">Win Gold Credit</div><div class="step-sub">Metal holdings credited to portal</div><div class="step-tech">Agent 7 · Win Gold</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box man"><div class="step-icon">Vault</div><div class="step-label">Physical Storage</div><div class="step-sub">Serialised: ring-fenced. Pool: vault.</div><span class="step-tag tag-man">Manual</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Bill</div><div class="step-label">Recurring Billing (Allocated)</div><div class="step-sub">Quarterly/half-yearly auto-invoice</div><div class="step-tech">Agent 7 · Win Gold</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Report</div><div class="step-label">FY &amp; Monthly Reports</div><div class="step-sub">LBM APM valuation · Statement</div><div class="step-tech">Agent 7</div><span class="step-tag tag-auto">Auto</span></div></div>
+    </div></div>
+    <div class="diamond-row">
+      <div class="diamond"><p>Storage type?</p><span class="byes">Allocated — Serialised: exact same item returned, ring-fenced, cannot be used in inventory</span><span class="bno">Allocated — Un-serialised: equivalent item, may be used in inventory if needed</span></div>
+      <div class="diamond"><p>Pool allocation — customer converting to physical?</p><span class="byes">YES — customer selects product in portal, pays fabrication cost, Agent 7 deducts from metal account, triggers fulfilment</span><span class="bno">NO — holdings remain in pool, visible via portal</span></div>
+    </div>
+    <div class="note amber"><strong>CURRENT SCOPE:</strong> Storage is only available to customers purchasing gold from GK Gold — it is NOT currently offered as a standalone service to customers wishing to store their own existing gold. Integration of standalone storage is planned for a future phase. Bailor-Bailee agreement is legally required for both allocated and pool allocation. Win Gold e-sign capability needs verification. Pool allocation insurance covered by company. Allocated storage fee rate to be confirmed with Directors.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: AML/CTF INTEGRATION -->
+<div class="section s7">
+  <div class="sec-head">
+    <div class="num">7</div>
+    <div class="hicon">Shield</div>
+    <div class="sec-title">AML/CTF Integration — Agent 5 Co-Pilot (All Services)</div>
+    <div class="auto-badge">~75% Automated</div>
+  </div>
+  <div class="sec-body">
+    <div class="flow-wrap"><div class="flow">
+      <div class="step"><div class="step-box auto"><div class="step-icon">Watch</div><div class="step-label">Real-Time Monitoring</div><div class="step-sub">All transactions watched continuously</div><div class="step-tech">Agent 5</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Flag</div><div class="step-label">Threshold Detection</div><div class="step-sub">$5K bullion / $10K scrap / $10K TTR</div><div class="step-tech">Agent 5 · Rules</div><span class="step-tag tag-crit">Mandatory</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Link</div><div class="step-label">Structuring Detection</div><div class="step-sub">Linked transactions across 10 days</div><div class="step-tech">Agent 5 · ML</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box semi"><div class="step-icon">Alert</div><div class="step-label">CO Alert + Recommendation</div><div class="step-sub">Agent 5 → CO dashboard</div><div class="step-tech">Agent 5</div><span class="step-tag tag-semi">Semi</span></div></div>
+      <div class="step"><div class="step-box semi"><div class="step-icon">TTR</div><div class="step-label">TTR Auto-Drafted</div><div class="step-sub">CO reviews and submits manually</div><div class="step-tech">Agent 5 → CO</div><span class="step-tag tag-crit">10 days</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Archive</div><div class="step-label">All Records Auto-Archived</div><div class="step-sub">7-year retention enforced</div><div class="step-tech">Agent 5 · Records</div><span class="step-tag tag-auto">Auto</span></div></div>
+    </div></div>
+    <div class="note red">AUSTRAC Online does NOT accept automated API submissions for TTR/SMR — all reports must be submitted by an authorised human (Compliance Officer). Agent 5 auto-drafts and tracks deadlines, but submission is always manual. Tipping-off is a criminal offence — Agent 5 applies auto-lock on suspect customer records.</div>
+  </div>
+</div>
+
+<!-- SECTION 8: EOD RECONCILIATION -->
+<div class="section s8">
+  <div class="sec-head">
+    <div class="num">8</div>
+    <div class="hicon">Report</div>
+    <div class="sec-title">End-of-Day Reconciliation &amp; Reporting (SOP-RO-009)</div>
+    <div class="auto-badge">~80% Automated</div>
+  </div>
+  <div class="sec-body">
+    <div class="flow-wrap"><div class="flow">
+      <div class="step"><div class="step-box man"><div class="step-icon">Cash</div><div class="step-label">Cash Count</div><div class="step-sub">Physical till vs Xero cash sales</div><span class="step-tag tag-man">Manual</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Bank</div><div class="step-label">EFT Auto-Reconciled</div><div class="step-sub">NAB vs Xero — Agent 8 matches</div><div class="step-tech">Agent 8 · NAB</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Register</div><div class="step-label">Transaction Register</div><div class="step-sub">Auto-export by lot and branch</div><div class="step-tech">Agent 8 · Xero</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">AML</div><div class="step-label">AML/CTF Daily Review Pack</div><div class="step-sub">Agent 5 flags to CO dashboard</div><div class="step-tech">Agent 5</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Loan</div><div class="step-label">Loan Status Report</div><div class="step-sub">CashNet daily transitions flagged</div><div class="step-tech">Agent 6</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box auto"><div class="step-icon">Safe</div><div class="step-label">Vault vs Register Check</div><div class="step-sub">Agent 4 flags any discrepancies</div><div class="step-tech">Agent 4</div><span class="step-tag tag-auto">Auto</span></div></div>
+      <div class="step"><div class="step-box semi"><div class="step-icon">Sign</div><div class="step-label">Supervisor Sign-Off</div><div class="step-sub">Reconciliation report approved</div><span class="step-tag tag-semi">Semi</span></div></div>
+    </div></div>
+    <div class="note green">Agent 8 is the daily reporting backbone — auto-generates the full EOD reconciliation pack, transaction registers per branch, AML flag summary, and management KPI dashboard. Supervisor only needs to review exceptions and sign off. Target: full EOD pack ready within 15 minutes of close.</div>
+  </div>
+</div>
+
+<!-- IMPLEMENTATION ROADMAP -->
+<div style="background:white;border-radius:14px;padding:24px;margin-bottom:24px;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+  <h2 style="font-size:15px;font-weight:800;color:#1a1a2e;margin-bottom:16px;">Implementation Roadmap</h2>
+  <div class="roadmap">
+    <div class="rm-card rm-now">
+      <div class="rm-head">NOW — Weeks 1-2</div>
+      <div class="rm-body"><ul>
+        <li>Activate GBG greenID (Agent 1) — hosted web on tablet + online checkout</li>
+        <li>Activate GBG ongoing screening (already in contract)</li>
+        <li>Confirm CashNet SMS automation is enabled (Agent 6)</li>
+        <li>Set up manual EOD reconciliation template as bridge (Agent 8 pre-build)</li>
+        <li>Engage lawyer: confirm interest rate caps and storage fee maximums</li>
+        <li>Draft AMS-GK intercompany contract</li>
+      </ul></div>
+    </div>
+    <div class="rm-card rm-p2">
+      <div class="rm-head">Phase 2 — Weeks 3-6</div>
+      <div class="rm-body"><ul>
+        <li>Build Agent 2: live spot price API integration (Xero + CashNet + Win Gold)</li>
+        <li>Build Agent 3: Xero transaction automation (invoices, POs, payment matching)</li>
+        <li>Build Agent 5: AML/CTF threshold monitoring + CO dashboard v1</li>
+        <li>Build Agent 6 (Phase 1): loan lifecycle status automation + SMS cadence</li>
+        <li>Auto-reference number generation (Branch + sequential PO)</li>
+        <li>Verify Win Gold e-sign for Bailor-Bailee agreements</li>
+      </ul></div>
+    </div>
+    <div class="rm-card rm-p3">
+      <div class="rm-head">Phase 3 — Weeks 7-12</div>
+      <div class="rm-body"><ul>
+        <li>Build Agent 1: GBG greenID API full integration into POS + website checkout</li>
+        <li>Build Agent 4: inventory management (crud/fresh, vault vs register)</li>
+        <li>Build Agent 7: Win Gold storage automation (billing, agreements, pool conversion)</li>
+        <li>Build Agent 8: EOD reconciliation + daily reporting automation</li>
+        <li>Agent 6 Phase 2: acquisition workflow, intercompany invoice, trust account tracking</li>
+        <li>Custom staff interface (replace full Xero/CashNet access with limited UI)</li>
+      </ul></div>
+    </div>
+    <div class="rm-card rm-tgt">
+      <div class="rm-head">Target State — Post Week 12</div>
+      <div class="rm-body"><ul>
+        <li>KYC: fully automated via GBG greenID + ongoing screening</li>
+        <li>Pricing: live API — zero manual spot checking</li>
+        <li>Transactions: Xero auto-invoiced, NAB payment auto-matched</li>
+        <li>Loans: CashNet lifecycle fully managed by Agent 6</li>
+        <li>Storage: Win Gold fully automated by Agent 7</li>
+        <li>EOD: full reconciliation pack ready in 15 minutes via Agent 8</li>
+        <li>AML/CTF: Agent 5 monitors all services in real time</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<footer>GK Gold Corporation Pty Ltd &nbsp;·&nbsp; Retail Operations Automated Process Map v1.0 &nbsp;·&nbsp; May 2026 &nbsp;·&nbsp; Prepared by Abhay Khurana &nbsp;·&nbsp; For internal use only</footer>
+
+</body>
+</html>
