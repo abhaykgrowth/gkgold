@@ -141,6 +141,27 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;color:#1a1a2e;pa
 
 /* ─── Footer ─────────────────────────────────────── */
 footer{text-align:center;margin-top:32px;color:#888;font-size:11px;}
+
+@media(max-width:768px){
+  body{padding:14px 10px 40px;}
+  .header{flex-direction:column;padding:20px 16px;gap:14px;}
+  .header h1{font-size:17px;}
+  .header .sub{font-size:11px;}
+  .hbadges{gap:8px;}
+  .hbadge{min-width:calc(50% - 4px);}
+  .agent-grid{grid-template-columns:1fr 1fr;}
+  .flow-wrap{-webkit-overflow-scrolling:touch;}
+  .roadmap{grid-template-columns:1fr;}
+  .thresh-grid{grid-template-columns:1fr;}
+  .thresh-col{border-right:none;border-bottom:1px solid #f0f0f0;}
+  .thresh-col:last-child{border-bottom:none;}
+  .auto-grid{grid-template-columns:1fr;}
+}
+@media(max-width:480px){
+  .header h1{font-size:15px;}
+  .agent-grid{grid-template-columns:1fr;}
+  .hbadge{min-width:100%;}
+}
 </style>
 </head>
 <body>
