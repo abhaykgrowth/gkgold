@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GK Gold — Inventory Management Process</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;color:#1a1a2e;padding:20px 16px 60px;}
+
+/* ── Header ── */
+.header{background:linear-gradient(135deg,#0d1b2a,#0f3460);border-radius:14px;padding:24px 28px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;}
+.header h1{color:#C9A84C;font-size:20px;font-weight:800;}
+.header .sub{color:#90b4d0;font-size:11.5px;margin-top:4px;}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.hbadge{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:7px;padding:8px 12px;text-align:center;min-width:110px;}
+.hbadge .ht{color:#90b4d0;font-size:9px;font-weight:700;text-transform:uppercase;}
+.hbadge .hv{color:white;font-size:11px;font-weight:600;margin-top:2px;}
+
+/* ── Legend ── */
+.legend{background:white;border-radius:8px;padding:10px 16px;margin-bottom:14px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+.leg{display:flex;align-items:center;gap:5px;font-size:10.5px;color:#444;}
+.ldot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+/* ── Section wrapper ── */
+.section{background:white;border-radius:12px;padding:18px 22px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);}
+.section h2{font-size:13px;font-weight:800;color:#1a1a2e;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #C9A84C;display:flex;align-items:center;gap:8px;}
+.section-label{display:inline-block;background:#C9A84C;color:white;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:800;margin-right:4px;}
+.section-label.blue{background:#0052a3;}
+.section-label.green{background:#1b5e20;}
+.section-label.purple{background:#4a148c;}
+.section-label.red{background:#b71c1c;}
+.section-label.teal{background:#006064;}
+
+/* ── Phase scope bar ── */
+.phase-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.phase-pill{border-radius:6px;padding:8px 14px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.phase-pill.p1{background:#e8f5e9;color:#1b5e20;border:1.5px solid #66bb6a;}
+.phase-pill.p2{background:#e3f2fd;color:#1565c0;border:1.5px solid #42a5f5;}
+.phase-pill.p3{background:#fff3e0;color:#e65100;border:1.5px solid #ffa726;}
+.phase-dot{width:9px;height:9px;border-radius:50%;}
+.p1 .phase-dot{background:#2e7d32;}
+.p2 .phase-dot{background:#1565c0;}
+.p3 .phase-dot{background:#e65100;}
+
+/* ── Step row (horizontal flow) ── */
+.step-row{display:flex;align-items:stretch;gap:0;overflow-x:auto;padding-bottom:6px;}
+.step{position:relative;padding-right:24px;flex-shrink:0;}
+.step:not(:last-child)::after{content:'▶';position:absolute;right:3px;top:50%;transform:translateY(-50%);color:#ccc;font-size:12px;}
+.sbox{border-radius:9px;padding:10px 12px;min-height:82px;min-width:148px;max-width:168px;cursor:default;}
+.sbox:hover{box-shadow:0 3px 10px rgba(0,0,0,0.1);transform:translateY(-1px);transition:all 0.15s;}
+.sbox .si{font-size:17px;margin-bottom:4px;}
+.sbox .sl{font-size:10.5px;font-weight:700;color:#1a1a2e;line-height:1.3;}
+.sbox .ss{font-size:9px;color:#607d8b;margin-top:3px;line-height:1.4;}
+.sbox .stag{display:inline-block;padding:2px 5px;border-radius:3px;font-size:8px;font-weight:800;text-transform:uppercase;margin-top:4px;}
+.sbox .stech{display:inline-block;background:#e3f2fd;color:#1565c0;border-radius:8px;padding:1px 6px;font-size:8px;font-weight:700;margin-top:3px;}
+
+/* Step types */
+.auto{background:#e8f5e9;border:1.5px solid #66bb6a;}
+.semi{background:#fff8e1;border:1.5px solid #ffca28;}
+.man{background:#ecf0f1;border:1.5px solid #bdc3c7;}
+.crit{background:#fce4ec;border:1.5px solid #e53935;}
+.sys{background:#e3f2fd;border:1.5px solid #42a5f5;}
+
+.tag-auto{background:#c8e6c9;color:#1b5e20;}
+.tag-semi{background:#fff9c4;color:#f57f17;}
+.tag-man{background:#eceff1;color:#455a64;}
+.tag-crit{background:#ffcdd2;color:#b71c1c;}
+.tag-sys{background:#bbdefb;color:#1565c0;}
+
+/* ── Location grid ── */
+.loc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:4px;}
+.loc-card{border-radius:10px;padding:14px;border:1.5px solid #e0e0e0;position:relative;}
+.loc-card.primary{border-color:#C9A84C;background:#fffdf4;}
+.loc-card.branch{border-color:#42a5f5;background:#f3f9ff;}
+.loc-card.factory{border-color:#bdbdbd;background:#fafafa;}
+.loc-phase{position:absolute;top:10px;right:10px;background:#1b5e20;color:white;border-radius:3px;padding:2px 6px;font-size:8px;font-weight:800;}
+.loc-phase.future{background:#e65100;}
+.loc-title{font-size:12px;font-weight:800;color:#1a1a2e;margin-bottom:4px;}
+.loc-role{font-size:9.5px;font-weight:700;color:#C9A84C;margin-bottom:6px;text-transform:uppercase;}
+.loc-item{font-size:10px;color:#555;line-height:1.6;display:flex;gap:5px;align-items:flex-start;}
+.loc-item::before{content:'›';color:#C9A84C;font-weight:700;flex-shrink:0;}
+
+/* ── Swimlane ── */
+.swim-container{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:4px;}
+.swimlane{border-radius:12px;overflow:hidden;border:1px solid #e0e0e0;}
+.swim-head{padding:12px 16px;font-weight:800;font-size:12.5px;color:white;display:flex;align-items:center;gap:8px;}
+.swim-body{padding:14px;background:white;}
+.swim-step{border-radius:8px;padding:10px 12px;margin-bottom:8px;}
+.swim-step.auto{background:#f9fff9;border-left:3px solid #66bb6a;border:1px solid #e8f5e9;border-left:3px solid #66bb6a;}
+.swim-step.semi{background:#fffef9;border:1px solid #fff8e1;border-left:3px solid #ffca28;}
+.swim-step.man{background:#fafafa;border:1px solid #f0f0f0;border-left:3px solid #bdbdbd;}
+.swim-step.crit{background:#fff9f9;border:1px solid #fce4ec;border-left:3px solid #e53935;}
+.swim-step.sys{background:#f3f9ff;border:1px solid #e3f2fd;border-left:3px solid #42a5f5;}
+.swim-num{font-size:9px;font-weight:800;color:#999;margin-bottom:3px;}
+.swim-title{font-size:11px;font-weight:700;color:#1a1a2e;margin-bottom:4px;}
+.swim-desc{font-size:10px;color:#555;line-height:1.5;}
+.swim-tag{display:inline-block;border-radius:4px;padding:2px 7px;font-size:9px;font-weight:800;margin-top:4px;}
+.swim-tag.auto{background:#e8f5e9;color:#1b5e20;border:none;}
+.swim-tag.crit{background:#ffcdd2;color:#b71c1c;border:none;}
+.swim-tag.sys{background:#bbdefb;color:#1565c0;border:none;}
+.swim-tag.man{background:#eceff1;color:#455a64;border:none;}
+
+.otc-head{background:linear-gradient(90deg,#b8860b,#d4a017);}
+.ecom-head{background:linear-gradient(90deg,#0052a3,#0099ff);}
+.scrap-head{background:linear-gradient(90deg,#4a148c,#8e24aa);}
+.jew-head{background:linear-gradient(90deg,#1b5e20,#2e7d32);}
+
+/* ── Notes ── */
+.note{padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:11px;line-height:1.6;}
+.note.red{background:#ffebee;border-left:4px solid #c62828;color:#b71c1c;}
+.note.amber{background:#fff8e1;border-left:4px solid #ff8f00;color:#e65100;}
+.note.blue{background:#e3f2fd;border-left:4px solid #1565c0;color:#1a237e;}
+.note.green{background:#e8f5e9;border-left:4px solid #2e7d32;color:#1b5e20;}
+.note.gold{background:#fffdf0;border-left:4px solid #C9A84C;color:#7a5a00;}
+
+/* ── Flow connector label ── */
+.flow-connector{display:flex;align-items:center;gap:8px;margin:10px 0;}
+.flow-line{flex:1;height:2px;background:linear-gradient(90deg,#e0e0e0,#C9A84C,#e0e0e0);}
+.flow-label{font-size:10px;font-weight:700;color:#888;white-space:nowrap;padding:0 8px;}
+
+/* ── Vertical step list ── */
+.vstep-list{display:flex;flex-direction:column;gap:6px;}
+.vstep{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:8px;background:#fafafa;border:1px solid #eeeeee;}
+.vstep-num{width:26px;height:26px;border-radius:50%;background:#0f3460;color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.vstep-body{}
+.vstep-title{font-size:11px;font-weight:700;color:#1a1a2e;margin-bottom:3px;}
+.vstep-desc{font-size:10px;color:#555;line-height:1.5;}
+.vstep.crit{background:#fff9f9;border-color:#fce4ec;}
+.vstep.crit .vstep-num{background:#c62828;}
+.vstep.auto{background:#f9fff9;border-color:#e8f5e9;}
+.vstep.auto .vstep-num{background:#2e7d32;}
+.vstep.sys{background:#f3f9ff;border-color:#e3f2fd;}
+.vstep.sys .vstep-num{background:#0052a3;}
+
+/* ── Future phase cards ── */
+.future-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.future-card{border-radius:10px;padding:14px;border:1.5px solid #e0e0e0;}
+.future-card.p2{border-color:#42a5f5;background:#f3f9ff;}
+.future-card.p3{border-color:#ffa726;background:#fff8f0;}
+.future-card.loan{border-color:#ab47bc;background:#fdf4ff;}
+.future-badge{display:inline-block;border-radius:4px;padding:3px 8px;font-size:9px;font-weight:800;text-transform:uppercase;margin-bottom:8px;}
+.future-card.p2 .future-badge{background:#42a5f5;color:white;}
+.future-card.p3 .future-badge{background:#ffa726;color:white;}
+.future-card.loan .future-badge{background:#ab47bc;color:white;}
+.future-title{font-size:12px;font-weight:800;color:#1a1a2e;margin-bottom:6px;}
+.future-item{font-size:10px;color:#555;line-height:1.7;display:flex;gap:5px;}
+.future-item::before{content:'→';font-weight:700;color:#C9A84C;flex-shrink:0;}
+
+/* ── WinGold integration bar ── */
+.wingold-bar{background:linear-gradient(135deg,#0d1b2a,#0f3460);border-radius:10px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.wb-label{color:#C9A84C;font-size:11px;font-weight:800;}
+.wb-arrow{color:#445;font-size:16px;}
+.wb-item{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:5px 10px;color:white;font-size:10px;font-weight:600;}
+.wb-item.master{background:rgba(201,168,76,0.2);border-color:#C9A84C;color:#C9A84C;}
+
+footer{text-align:center;margin-top:28px;color:#888;font-size:10.5px;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     HEADER
+═══════════════════════════════════════════════════════════════ -->
+<div class="header">
+  <div>
+    <h1>GK Gold Corporation — Inventory Management Process</h1>
+    <p class="sub">End-to-end inventory flow: Receiving → Storage → OTC Sales → E-Commerce → Scrap &amp; Jewellery Processing</p>
+    <p class="sub" style="margin-top:3px;">Chermside (Branch + Head Office) · Sunnybank · Bronze Plains · Factory &nbsp;|&nbsp; WinGold ERP as single source of truth</p>
+  </div>
+  <div>
+    <div class="badges">
+      <div class="hbadge"><div class="ht">ERP System</div><div class="hv">WinGold</div></div>
+      <div class="hbadge"><div class="ht">KYC</div><div class="hv">GBG / Gold Secure</div></div>
+      <div class="hbadge"><div class="ht">Phase 1 Scope</div><div class="hv">Bullion + Buyback</div></div>
+      <div class="hbadge"><div class="ht">Locations</div><div class="hv">3 Branches</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── WinGold system integration bar ── -->
+<div class="wingold-bar">
+  <span class="wb-label">SYSTEM FLOW</span>
+  <span class="wb-item master">WinGold ERP (Master)</span>
+  <span class="wb-arrow">⇄</span>
+  <span class="wb-item">E-Commerce Website</span>
+  <span class="wb-arrow">⇄</span>
+  <span class="wb-item">GBG KYC / Gold Secure</span>
+  <span class="wb-arrow">→</span>
+  <span class="wb-item">Xero (Accounting only)</span>
+  <span style="margin-left:auto;color:#90b4d0;font-size:10px;font-weight:600;">All pricing, stock levels &amp; product data managed in WinGold · Changes auto-reflect across all channels</span>
+</div>
+
+<!-- ── Legend ── -->
+<div class="legend">
+  <strong style="font-size:10.5px;color:#555">Step Type:</strong>
+  <div class="leg"><div class="ldot" style="background:#66bb6a"></div>Fully Automated</div>
+  <div class="leg"><div class="ldot" style="background:#ffca28"></div>Semi-Automated</div>
+  <div class="leg"><div class="ldot" style="background:#bdbdbd"></div>Manual (Staff)</div>
+  <div class="leg"><div class="ldot" style="background:#e53935"></div>Critical / Compliance</div>
+  <div class="leg"><div class="ldot" style="background:#42a5f5"></div>System (WinGold)</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION A — SCOPE & PHASE
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <h2><span class="section-label">SCOPE</span> Phase 1 — Active Scope &amp; Future Phases</h2>
+  <div class="phase-bar">
+    <div class="phase-pill p1"><div class="phase-dot"></div><strong>Phase 1 — NOW:</strong>&nbsp; Cast Bars · Minted Bars · Coins · Rare &amp; Collectibles · Bullion Buyback &nbsp;|&nbsp; Dispatch via Chermside + Branches</div>
+    <div class="phase-pill p2"><div class="phase-dot"></div><strong>Phase 2:</strong>&nbsp; Factory dispatch activated · Manufacturing-to-order fulfilment</div>
+    <div class="phase-pill p3"><div class="phase-dot"></div><strong>Phase 3:</strong>&nbsp; Jewellery inventory in WinGold · Loan Management Module</div>
+  </div>
+  <div class="note gold"><strong>MASTER RULE:</strong> All inventory data lives in WinGold. Any update to pricing, formulas, products, or stock levels is made in WinGold only — changes auto-propagate to the website and all channels. Staff must never quote prices from memory or external sources.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION B — STORAGE LOCATIONS
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <h2><span class="section-label blue">STORAGE</span> Storage Locations &amp; Responsibilities (Phase 1)</h2>
+  <div class="loc-grid">
+
+    <div class="loc-card primary">
+      <div class="loc-phase">Phase 1 — PRIMARY</div>
+      <div class="loc-title">🏢 Chermside</div>
+      <div class="loc-role">Branch + Head Office</div>
+      <div class="loc-item">All bullion product types (both brands)</div>
+      <div class="loc-item">Rare &amp; collectibles + overflow stock</div>
+      <div class="loc-item">Primary e-commerce dispatch hub</div>
+      <div class="loc-item">OTC sales (Gold Secure + Cash to Gold)</div>
+    </div>
+
+    <div class="loc-card branch">
+      <div class="loc-phase">Phase 1</div>
+      <div class="loc-title">🏪 Sunnybank</div>
+      <div class="loc-role">Branch — Cash to Gold Trading</div>
+      <div class="loc-item">Cast bars, minted bars, coins</div>
+      <div class="loc-item">Bullion buyback</div>
+      <div class="loc-item">OTC sales + e-commerce dispatch</div>
+    </div>
+
+    <div class="loc-card branch">
+      <div class="loc-phase">Phase 1</div>
+      <div class="loc-title">🏪 Bronze Plains</div>
+      <div class="loc-role">Branch — Cash to Gold Trading</div>
+      <div class="loc-item">Cast bars, minted bars, coins</div>
+      <div class="loc-item">Bullion buyback</div>
+      <div class="loc-item">OTC sales + e-commerce dispatch</div>
+    </div>
+
+    <div class="loc-card factory">
+      <div class="loc-phase future">Phase 2+</div>
+      <div class="loc-title">🏭 Factory</div>
+      <div class="loc-role">Manufacturing + Scrap Processing</div>
+      <div class="loc-item">Manufacturing output (Phase 1: transfers to Chermside)</div>
+      <div class="loc-item">Scrap assessment &amp; jewellery sorting</div>
+      <div class="loc-item">E-commerce dispatch (Phase 2+)</div>
+    </div>
+
+  </div>
+  <div class="note red" style="margin-top:12px;"><strong>CRITICAL:</strong> Stock must never be physically moved between locations without a corresponding WinGold transfer record. Unrecorded transfers create stock discrepancies and audit risk.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION C — RECEIVING & PROCUREMENT
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <h2><span class="section-label green">PROCESS 1</span> Inventory Receiving &amp; Procurement</h2>
+  <div class="step-row">
+    <div class="step">
+      <div class="sbox man">
+        <div class="si">📦</div>
+        <div class="sl">Delivery Received</div>
+        <div class="ss">Staff at receiving location accepts delivery. Docket checked vs PO — qty, weight, product type, condition.</div>
+        <span class="stag tag-man">Manual</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="sbox man">
+        <div class="si">🔍</div>
+        <div class="sl">Physical Verification</div>
+        <div class="ss">Weigh &amp; inspect each item. Minted: check seal. Coins: year/mint check. Rare: serial vs PO. Cast: weight tolerance.</div>
+        <span class="stag tag-man">Staff</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="sbox sys">
+        <div class="si">💻</div>
+        <div class="sl">Stock Entry in WinGold</div>
+        <div class="ss">Log by location, category, weight, purity, brand. Serial numbers for rare/collectibles. E-commerce availability auto-updates.</div>
+        <span class="stag tag-sys">WinGold</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="sbox man">
+        <div class="si">🔒</div>
+        <div class="sl">Physical Storage</div>
+        <div class="ss">Move to designated storage area. High-value items in labelled secure compartments. Confirm location in WinGold.</div>
+        <span class="stag tag-man">Staff</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="sbox auto">
+        <div class="si">📋</div>
+        <div class="sl">Documentation Filed</div>
+        <div class="ss">Docket signed, scanned, filed. PO marked fulfilled in WinGold. Discrepancies logged &amp; escalated.</div>
+        <span class="stag tag-auto">Complete</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-connector"><div class="flow-line"></div><div class="flow-label">INTERNAL STOCK TRANSFER PROCESS</div><div class="flow-line"></div></div>
+
+  <div class="step-row">
+    <div class="step">
+      <div class="sbox sys">
+        <div class="si">📤</div>
+        <div class="sl">Transfer Request</div>
+        <div class="ss">Originating location raises transfer in WinGold: items, quantities, destination.</div>
+        <span class="stag tag-sys">WinGold</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="sbox man">
+        <div class="si">📦</div>
+        <div class="sl">Package &amp; Dispatch</div>
+        <div class="ss">Items securely packaged with transfer docket. Sent via approved courier or staff delivery.</div>
+        <span class="stag tag-man">Staff</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="sbox man">
+        <div class="si">✅</div>
+        <div class="sl">Receiving Verification</div>
+        <div class="ss">Receiving staff check items against transfer docket. Any discrepancies flagged immediately.</div>
+        <span class="stag tag-man">Staff</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="sbox sys">
+        <div class="si">🔄</div>
+        <div class="sl">Confirm Receipt in WinGold</div>
+        <div class="ss">Receiving staff confirms in WinGold. Stock reflects at new location instantly.</div>
+        <span class="stag tag-sys">WinGold</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="sbox auto">
+        <div class="si">📁</div>
+        <div class="sl">Both Parties File Docket</div>
+        <div class="ss">Originating + receiving locations retain signed transfer docket copies.</div>
+        <span class="stag tag-auto">Complete</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION D — OTC vs E-COMMERCE SALES (SWIMLANES)
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <h2><span class="section-label">PROCESS 2 &amp; 3</span> Sales Channels — OTC (Branch) &amp; E-Commerce</h2>
+
+  <div class="swim-container">
+
+    <!-- OTC SALES -->
+    <div class="swimlane">
+      <div class="swim-head otc-head">🏪 Over-the-Counter (OTC) — Branch Sales</div>
+      <div class="swim-body">
+
+        <div class="swim-step man">
+          <div class="swim-num">OTC 1</div>
+          <div class="swim-title">Customer Arrives — Product Enquiry</div>
+          <div class="swim-desc">Staff checks live stock availability in WinGold for that branch. Presents products at live WinGold pricing.</div>
+          <span class="swim-tag man">Manual</span>
+        </div>
+
+        <div class="swim-step crit">
+          <div class="swim-num">OTC 2</div>
+          <div class="swim-title">KYC Verification (GBG)</div>
+          <div class="swim-desc">KYC via Gold Secure GBG (integrated with WinGold). New customers registered; returning customers looked up. AML compliance checks completed. Transaction proceeds only on KYC clearance.</div>
+          <span class="swim-tag crit">Compliance</span>
+        </div>
+
+        <div class="swim-step sys">
+          <div class="swim-num">OTC 3</div>
+          <div class="swim-title">Transaction in WinGold</div>
+          <div class="swim-desc">Staff raises sale in WinGold: product, quantity, customer record. WinGold applies live pricing. Payment received and recorded. Stock auto-deducted from branch balance.</div>
+          <span class="swim-tag sys">WinGold</span>
+        </div>
+
+        <div class="swim-step man">
+          <div class="swim-num">OTC 4</div>
+          <div class="swim-title">Item Retrieval &amp; Handover</div>
+          <div class="swim-desc">Items retrieved from secure storage. Verified against WinGold sale record. Receipt generated from WinGold. Minted bars: assay card must be intact at handover.</div>
+          <span class="swim-tag man">Staff</span>
+        </div>
+
+        <div class="swim-step auto">
+          <div class="swim-num">OTC 5</div>
+          <div class="swim-title">End-of-Day Reconciliation</div>
+          <div class="swim-desc">Branch manager runs WinGold daily sales report. Physical stock vs WinGold closing balance reconciled. Cash/payment reconciliation signed off. Discrepancies escalated immediately.</div>
+          <span class="swim-tag auto">Daily</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- E-COMMERCE -->
+    <div class="swimlane">
+      <div class="swim-head ecom-head">🛒 E-Commerce — Online Order Fulfilment (Phase 1)</div>
+      <div class="swim-body">
+
+        <div class="swim-step sys">
+          <div class="swim-num">EC 1</div>
+          <div class="swim-title">Order Placed on Website</div>
+          <div class="swim-desc">Customer places order. WinGold records as pending sale. Live stock and pricing pulled from WinGold. Customer sees availability by location (Ainslie-style). Order confirmation auto-sent.</div>
+          <span class="swim-tag sys">WinGold Auto</span>
+        </div>
+
+        <div class="swim-step crit">
+          <div class="swim-num">EC 2</div>
+          <div class="swim-title">KYC &amp; AML Check (GBG)</div>
+          <div class="swim-desc">KYC triggered via GBG integration. New customers: ID verification required. Order held pending clearance — items soft-reserved. Orders failing KYC are cancelled; reservation released.</div>
+          <span class="swim-tag crit">Compliance</span>
+        </div>
+
+        <div class="swim-step sys">
+          <div class="swim-num">EC 3</div>
+          <div class="swim-title">Order Allocation &amp; Routing</div>
+          <div class="swim-desc">KYC cleared → WinGold allocates order to optimal dispatch location. Phase 1: routed to Chermside or nearest branch. Stock hard-reserved — removed from website display.</div>
+          <span class="swim-tag sys">WinGold</span>
+        </div>
+
+        <div class="swim-step man">
+          <div class="swim-num">EC 4</div>
+          <div class="swim-title">Packing &amp; Dispatch</div>
+          <div class="swim-desc">Staff retrieve items, verify against order. Secure packaging (plain/unmarked). Delivery: courier booked, tracking recorded in WinGold. Pickup: customer notified for collection.</div>
+          <span class="swim-tag man">Staff</span>
+        </div>
+
+        <div class="swim-step auto">
+          <div class="swim-num">EC 5</div>
+          <div class="swim-title">Order Completion</div>
+          <div class="swim-desc">Delivery: WinGold marked DISPATCHED on courier booking. Pickup: marked FULFILLED on collection (ID re-verified). Stock finalised. Customer receives confirmation.</div>
+          <span class="swim-tag auto">WinGold Auto</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <div class="note amber"><strong>PHASE 1 DISPATCH:</strong> All e-commerce orders dispatched from Chermside (head office) and branches only. Factory-based dispatch introduced in Phase 2.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION E — SCRAP & JEWELLERY
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <h2><span class="section-label purple">PROCESS 4</span> Scrap Gold &amp; Jewellery Processing</h2>
+
+  <div class="swim-container">
+
+    <!-- SCRAP PURCHASE -->
+    <div class="swimlane">
+      <div class="swim-head scrap-head">⚖️ Scrap Gold Purchase — Branch</div>
+      <div class="swim-body">
+
+        <div class="swim-step man">
+          <div class="swim-num">S1</div>
+          <div class="swim-title">Customer Arrives with Items</div>
+          <div class="swim-desc">Customer presents gold items (jewellery, scrap, coins, bars) for sale. Staff explains valuation process.</div>
+        </div>
+
+        <div class="swim-step crit">
+          <div class="swim-num">S2</div>
+          <div class="swim-title">KYC &amp; AML Check (GBG)</div>
+          <div class="swim-desc">KYC check completed via Gold Secure GBG before any assessment begins. Proceeds only on KYC clearance.</div>
+          <span class="swim-tag crit">Compliance</span>
+        </div>
+
+        <div class="swim-step man">
+          <div class="swim-num">S3</div>
+          <div class="swim-title">Gold Testing &amp; Valuation</div>
+          <div class="swim-desc">Acid test / XRF analyser for purity. Items weighed on calibrated scales. WinGold calculates offer using live spot price, purity, and backend slabs. Offer presented to customer.</div>
+          <span class="swim-tag sys">WinGold Pricing</span>
+        </div>
+
+        <div class="swim-step crit">
+          <div class="swim-num">S4</div>
+          <div class="swim-title">Contract &amp; Payment</div>
+          <div class="swim-desc">Customer accepts → sale contract created in WinGold. Customer signs contract. Payment made. Items logged as scrap/buyback inventory at branch, pending factory assessment.</div>
+          <span class="swim-tag sys">WinGold</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FACTORY PROCESSING -->
+    <div class="swimlane">
+      <div class="swim-head jew-head">🏭 Factory Assessment &amp; Sorting</div>
+      <div class="swim-body">
+
+        <div class="swim-step sys">
+          <div class="swim-num">F1</div>
+          <div class="swim-title">Transfer to Factory</div>
+          <div class="swim-desc">Scrap items batched and transferred from branch to factory. WinGold transfer record created (same process as internal stock transfers).</div>
+          <span class="swim-tag sys">WinGold Transfer</span>
+        </div>
+
+        <div class="swim-step man">
+          <div class="swim-num">F2</div>
+          <div class="swim-title">Factory Assessment</div>
+          <div class="swim-desc">Each item: purity tested, weighed, condition assessed. Sorted into: re-saleable jewellery · gold for refining/casting · scrap. Results recorded against each item.</div>
+          <span class="swim-tag man">Factory Staff</span>
+        </div>
+
+        <div class="swim-step auto">
+          <div class="swim-num">F3</div>
+          <div class="swim-title">Sorted Items — Back to Inventory</div>
+          <div class="swim-desc">Re-saleable jewellery → transferred to Chermside for e-commerce (Phase 3) or eBay (interim). Gold for refining → retained at factory for casting. Scrap → sent to refiner. All movements in WinGold.</div>
+          <span class="swim-tag auto">3 Streams</span>
+        </div>
+
+        <div class="swim-step semi">
+          <div class="swim-num">F4</div>
+          <div class="swim-title">Jewellery Sales — eBay (Interim)</div>
+          <div class="swim-desc">Until Phase 3: re-saleable jewellery photographed and listed on eBay. Sales tracked manually. Revenue reconciled with eBay payouts in accounting. WinGold jewellery category in Phase 3.</div>
+          <span class="swim-tag man">Interim Process</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="flow-connector"><div class="flow-line"></div><div class="flow-label">SORTED GOLD FOR REFINING → RE-ENTERS PROCUREMENT PROCESS AS CAST/MINTED BARS</div><div class="flow-line"></div></div>
+
+  <div class="note blue"><strong>PHASE 3 TARGET:</strong> Jewellery will have a dedicated WinGold category and website section (alongside bullion, buybacks, and collectibles). eBay continues as secondary channel but inventory tracked in WinGold as master system. Note: WinGold is primarily a bullion system — jewellery implementation requires careful planning.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION F — STOCK COUNTING
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <h2><span class="section-label teal">CONTROLS</span> Stock Counting &amp; Reconciliation Schedule</h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+
+    <div style="border-radius:9px;padding:14px;background:#f3f9ff;border:1.5px solid #42a5f5;">
+      <div style="font-size:11px;font-weight:800;color:#0052a3;margin-bottom:4px;">📅 Daily — Transaction Reconciliation</div>
+      <div style="font-size:10px;color:#555;line-height:1.6;">WinGold transaction log reconciled against physical opening/closing stock. Cash/payment reconciliation completed. Signed off by branch manager each end of day.</div>
+    </div>
+
+    <div style="border-radius:9px;padding:14px;background:#fff8e1;border:1.5px solid #ffca28;">
+      <div style="font-size:11px;font-weight:800;color:#e65100;margin-bottom:4px;">📊 Weekly — Spot Check</div>
+      <div style="font-size:10px;color:#555;line-height:1.6;">Random selection of product categories at each branch. Any variances investigated same day. Covers all locations on a rotating basis.</div>
+    </div>
+
+    <div style="border-radius:9px;padding:14px;background:#fce4ec;border:1.5px solid #e53935;">
+      <div style="font-size:11px;font-weight:800;color:#b71c1c;margin-bottom:4px;">🔎 Monthly — Full Stock Count</div>
+      <div style="font-size:10px;color:#555;line-height:1.6;">All items at all locations counted by two staff members. WinGold variance report reviewed. Discrepancies reported to management within 24 hours. Formal sign-off required.</div>
+    </div>
+
+  </div>
+  <div class="note amber" style="margin-top:12px;"><strong>STOCK AGING:</strong> Stock aging feature not currently available in WinGold. To be developed post go-live — either within WinGold or as a separate module. Decision to be confirmed with Goran.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION G — FUTURE PHASES
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <h2><span class="section-label red">FUTURE</span> Phase 2, 3 &amp; Loan Management Roadmap</h2>
+  <div class="future-grid">
+
+    <div class="future-card p2">
+      <div class="future-badge">Phase 2</div>
+      <div class="future-title">Factory Dispatch Activated</div>
+      <div class="future-item">Factory registered as dispatch location in WinGold</div>
+      <div class="future-item">E-commerce orders routed to factory for fulfilment</div>
+      <div class="future-item">Manufacturing output added directly to factory inventory</div>
+      <div class="future-item">Courier integration configured for factory location</div>
+    </div>
+
+    <div class="future-card p3">
+      <div class="future-badge">Phase 3</div>
+      <div class="future-title">Jewellery Inventory + Website</div>
+      <div class="future-item">Jewellery category created in WinGold (careful planning required — bullion-first system)</div>
+      <div class="future-item">Dedicated jewellery section live on website</div>
+      <div class="future-item">Factory assessment fully integrated with WinGold</div>
+      <div class="future-item">eBay inventory brought under WinGold tracking</div>
+    </div>
+
+    <div class="future-card loan">
+      <div class="future-badge">Loan Module</div>
+      <div class="future-title">Loan Management (Post Phase 1)</div>
+      <div class="future-item">~$1B loan portfolio · $30K–$100K new demand/month</div>
+      <div class="future-item">Based on Michael's ERP system (loan module)</div>
+      <div class="future-item">Workflow: evaluate gold → KYC → contract → backend slabs</div>
+      <div class="future-item">Expired loans not being withdrawn — cash flow at risk</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION H — ACTION ITEMS
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <h2><span class="section-label green">ACTIONS</span> Outstanding Action Items — 25 May 2026</h2>
+  <div class="vstep-list">
+    <div class="vstep crit">
+      <div class="vstep-num">1</div>
+      <div class="vstep-body">
+        <div class="vstep-title">Angie — Design &amp; document inventory management process map and SOPs</div>
+        <div class="vstep-desc">Complete process map to be shared via WhatsApp for team review meeting. This document serves as the reference input.</div>
+      </div>
+    </div>
+    <div class="vstep">
+      <div class="vstep-num">2</div>
+      <div class="vstep-body">
+        <div class="vstep-title">Team — Define dedicated storage locations</div>
+        <div class="vstep-desc">Confirm final storage configuration for Chermside, Sunnybank, Bronze Plains, and factory before WinGold go-live.</div>
+      </div>
+    </div>
+    <div class="vstep auto">
+      <div class="vstep-num">3</div>
+      <div class="vstep-body">
+        <div class="vstep-title">Team — Introduce Balani to Goran (next week)</div>
+        <div class="vstep-desc">E-commerce and KYC integration planning session. Covers WinGold ↔ website ↔ GBG connectivity.</div>
+      </div>
+    </div>
+    <div class="vstep sys">
+      <div class="vstep-num">4</div>
+      <div class="vstep-body">
+        <div class="vstep-title">Team — Review Michael's ERP system recording (loan module section)</div>
+        <div class="vstep-desc">Required before loan management module development begins. Informs workflow design for gold evaluation → KYC → contract → slab process.</div>
+      </div>
+    </div>
+    <div class="vstep">
+      <div class="vstep-num">5</div>
+      <div class="vstep-body">
+        <div class="vstep-title">Management / Goran — Decide on stock aging solution</div>
+        <div class="vstep-desc">Determine whether stock aging will be built within WinGold or as an external module. Required for Phase 1 complete.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>GK Gold Corporation Pty Ltd &nbsp;·&nbsp; Inventory Management Process &nbsp;·&nbsp; May 2026 &nbsp;·&nbsp; Prepared by Abhay Khurana &nbsp;·&nbsp; Confidential — For internal use only</footer>
+
+</body>
+</html>
