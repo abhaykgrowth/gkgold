@@ -27,7 +27,6 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;color:#1a1a2e;pa
 .sbox .sl{font-size:10.5px;font-weight:700;color:#1a1a2e;line-height:1.3;}
 .sbox .ss{font-size:9px;color:#607d8b;margin-top:3px;line-height:1.4;}
 .sbox .stag{display:inline-block;padding:2px 5px;border-radius:3px;font-size:8px;font-weight:800;text-transform:uppercase;margin-top:4px;}
-.sbox .stech{display:inline-block;background:#e3f2fd;color:#1565c0;border-radius:8px;padding:1px 6px;font-size:8px;font-weight:700;margin-top:3px;}
 
 .auto{background:#e8f5e9;border:1.5px solid #66bb6a;}
 .semi{background:#fff8e1;border:1.5px solid #ffca28;}
@@ -42,17 +41,33 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;color:#1a1a2e;pa
 .tag-email{background:#f3e5f5;color:#6a1b9a;}
 
 /* ── Payment timeline ─────── */
-.timeline{display:flex;align-items:center;gap:0;background:white;border-radius:12px;padding:14px 20px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);overflow-x:auto;}
-.tl-item{flex:1;min-width:120px;text-align:center;position:relative;padding:0 8px;}
-.tl-item:not(:last-child)::after{content:'';position:absolute;right:-1px;top:20px;width:2px;height:40px;background:#e0e0e0;}
-.tl-dot{width:32px;height:32px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:white;}
+.timeline{display:flex;align-items:flex-start;gap:0;background:white;border-radius:12px;padding:14px 20px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);overflow-x:auto;}
+.tl-item{flex:1;min-width:110px;text-align:center;position:relative;padding:0 6px;}
+.tl-item:not(:last-child)::after{content:'';position:absolute;right:-1px;top:16px;width:2px;height:40px;background:#e0e0e0;}
+.tl-dot{width:32px;height:32px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:10px;color:white;}
 .tl-label{font-size:10px;font-weight:700;color:#333;margin-bottom:3px;}
 .tl-sub{font-size:9px;color:#777;line-height:1.4;}
 .dot-blue{background:#1565c0;}
 .dot-green{background:#27AE60;}
 .dot-amber{background:#E67E22;}
+.dot-orange{background:#d35400;}
 .dot-red{background:#C0392B;}
 .dot-purple{background:#6a1b9a;}
+.dot-darkred{background:#7b1111;}
+
+/* ── AI Agent section ──────── */
+.agent-section{background:linear-gradient(135deg,#0d2137,#0a3d62);border-radius:12px;padding:18px 22px;margin-bottom:16px;box-shadow:0 2px 14px rgba(0,0,0,0.15);}
+.agent-section h2{font-size:13px;font-weight:800;color:#C9A84C;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #C9A84C;}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;}
+.agent-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:9px;padding:12px 14px;}
+.agent-card .ac-icon{font-size:20px;margin-bottom:6px;}
+.agent-card .ac-title{font-size:11px;font-weight:800;color:#C9A84C;margin-bottom:4px;}
+.agent-card .ac-desc{font-size:10px;color:#b0c8e0;line-height:1.5;}
+.agent-card .ac-tag{display:inline-block;background:rgba(201,168,76,0.2);color:#C9A84C;border-radius:4px;padding:2px 7px;font-size:9px;font-weight:800;margin-top:5px;}
+.agent-flow{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 14px;margin-top:12px;overflow-x:auto;}
+.af-box{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:8px 12px;text-align:center;font-size:10px;color:white;font-weight:700;min-width:110px;flex-shrink:0;}
+.af-arrow{color:#C9A84C;font-size:16px;flex-shrink:0;}
+.agent-note{background:rgba(201,168,76,0.1);border-left:3px solid #C9A84C;border-radius:0 6px 6px 0;padding:8px 12px;margin-top:10px;font-size:10px;color:#d4b87a;line-height:1.5;}
 
 /* ── Swimlanes ─────────────── */
 .swimlane-container{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
@@ -71,6 +86,11 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;color:#1a1a2e;pa
 .swim-step-desc{font-size:10px;color:#555;line-height:1.5;}
 .swim-email{display:inline-block;background:#f3e5f5;color:#6a1b9a;border-radius:4px;padding:2px 7px;font-size:9px;font-weight:800;margin-top:4px;}
 .swim-auto{display:inline-block;background:#e8f5e9;color:#1b5e20;border-radius:4px;padding:2px 7px;font-size:9px;font-weight:700;margin-top:4px;}
+.swim-both{display:inline-block;background:#fff3e0;color:#e65100;border-radius:4px;padding:2px 7px;font-size:9px;font-weight:700;margin-top:4px;}
+.swim-woo{display:inline-block;background:#e3f2fd;color:#0d47a1;border-radius:4px;padding:2px 6px;font-size:8.5px;font-weight:800;margin-top:4px;margin-right:3px;letter-spacing:0.2px;}
+.swim-wg{display:inline-block;background:#ede7f6;color:#4a148c;border-radius:4px;padding:2px 6px;font-size:8.5px;font-weight:800;margin-top:4px;margin-right:3px;letter-spacing:0.2px;}
+.swim-mtag{display:inline-block;background:#eceff1;color:#37474f;border-radius:4px;padding:2px 6px;font-size:8.5px;font-weight:800;margin-top:4px;margin-right:3px;letter-spacing:0.2px;}
+.sys-tags{margin-top:5px;display:flex;flex-wrap:wrap;gap:3px;}
 
 .delivery .swim-head{background:linear-gradient(90deg,#0052a3,#0099ff);}
 .pickup .swim-head{background:linear-gradient(90deg,#1b5e20,#2e7d32);}
@@ -88,80 +108,29 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;color:#1a1a2e;pa
 .email-card-body{padding:10px 14px;font-size:10.5px;color:#444;line-height:1.6;}
 .email-trigger{display:inline-block;background:#fce4ec;color:#c62828;border-radius:4px;padding:2px 7px;font-size:9px;font-weight:800;margin-bottom:6px;}
 
+/* ── Outstanding items ─────── */
+.outstanding-panel{background:white;border-radius:12px;padding:18px 22px;margin-bottom:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);}
+.outstanding-panel h2{font-size:13px;font-weight:800;color:#1a1a2e;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #E67E22;}
+.oi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;}
+.oi-card{background:#fffbf2;border:1px solid #ffe0b2;border-radius:8px;padding:12px 14px;}
+.oi-card .oi-icon{font-size:16px;margin-bottom:4px;}
+.oi-card .oi-title{font-size:10.5px;font-weight:800;color:#e65100;margin-bottom:4px;}
+.oi-card .oi-desc{font-size:10px;color:#555;line-height:1.5;}
+.oi-badge{display:inline-block;background:#fff3e0;color:#bf360c;border-radius:4px;padding:2px 6px;font-size:9px;font-weight:800;margin-top:5px;}
+
 /* ── Notes ────────────────── */
 .note{padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:11px;line-height:1.6;}
 .note.red{background:#ffebee;border-left:4px solid #c62828;color:#b71c1c;}
 .note.amber{background:#fff8e1;border-left:4px solid #ff8f00;color:#e65100;}
 .note.blue{background:#e3f2fd;border-left:4px solid #1565c0;color:#1a237e;}
 .note.green{background:#e8f5e9;border-left:4px solid #2e7d32;color:#1b5e20;}
+.note.purple{background:#f3e5f5;border-left:4px solid #6a1b9a;color:#4a148c;}
 
 .legend{background:white;border-radius:8px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
 .leg{display:flex;align-items:center;gap:5px;font-size:10.5px;color:#444;}
 .ldot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 
 footer{text-align:center;margin-top:28px;color:#888;font-size:10.5px;}
-
-/* ── MOBILE RESPONSIVE ────── */
-/* Tab switcher (shown on mobile only) */
-.swim-tabs{display:none;gap:0;margin-bottom:0;border-radius:12px 12px 0 0;overflow:hidden;}
-.swim-tab{flex:1;padding:12px 8px;font-size:12px;font-weight:800;border:none;cursor:pointer;background:#e0e0e0;color:#555;text-align:center;transition:all 0.2s;}
-.swim-tab.active-delivery{background:linear-gradient(90deg,#0052a3,#0099ff);color:white;}
-.swim-tab.active-pickup{background:linear-gradient(90deg,#1b5e20,#2e7d32);color:white;}
-.swim-tab.active-storage{background:linear-gradient(90deg,#4a148c,#8e24aa);color:white;}
-
-@media(max-width:768px){
-  body{padding:12px 10px 40px;}
-
-  /* Header stacks vertically */
-  .header{flex-direction:column;padding:18px 16px;gap:14px;}
-  .header h1{font-size:16px;}
-  .header .sub{font-size:10.5px;}
-  .badges{flex-wrap:wrap;}
-  .hbadge{min-width:calc(50% - 4px);flex:1;}
-
-  /* Shared sections */
-  .shared-section{padding:14px 14px;}
-  .shared-section h2{font-size:12px;}
-
-  /* Step row scrollable horizontally — keep as-is, just tighten */
-  .sbox{min-width:120px;max-width:140px;padding:8px 10px;}
-  .sbox .sl{font-size:10px;}
-  .sbox .ss{font-size:8.5px;}
-
-  /* Payment timeline — horizontal scroll, tighter */
-  .timeline{padding:12px 10px;overflow-x:auto;}
-  .tl-item{min-width:90px;padding:0 4px;}
-  .tl-dot{width:26px;height:26px;font-size:9px;}
-  .tl-label{font-size:9px;}
-  .tl-sub{font-size:8px;}
-
-  /* SWIMLANES: show tabs, hide non-active swimlane */
-  .swim-tabs{display:flex;}
-  .swimlane-container{grid-template-columns:1fr;gap:0;border-radius:0 0 12px 12px;overflow:hidden;}
-  .swimlane{display:none;border-radius:0;}
-  .swimlane.mobile-active{display:block;}
-
-  /* Notes */
-  .note{font-size:10.5px;padding:10px 12px;}
-
-  /* Email grid — single column */
-  .email-grid{grid-template-columns:1fr;}
-  .email-panel{padding:14px 14px;}
-
-  /* Legend — wrap tightly */
-  .legend{gap:10px;padding:10px 12px;}
-  .leg{font-size:10px;}
-
-  footer{font-size:10px;}
-}
-
-@media(max-width:480px){
-  .header h1{font-size:14px;}
-  .hbadge{min-width:100%;text-align:left;display:flex;gap:8px;align-items:center;}
-  .hbadge .ht{min-width:80px;}
-  .shared-section h2{font-size:11.5px;}
-  .swim-tab{font-size:11px;padding:10px 6px;}
-}
 </style>
 </head>
 <body>
@@ -170,14 +139,16 @@ footer{text-align:center;margin-top:28px;color:#888;font-size:10.5px;}
   <div>
     <h1>GK Gold / Gold Secure — E-Commerce Order Fulfilment Journey</h1>
     <p class="sub">Complete customer flow: Order Placed &rarr; Payment &rarr; Verification &rarr; Fulfilment (Delivery | Pickup | Storage) &rarr; Post-Order</p>
-    <p class="sub">Confirmed in team review session. Subject to WinGold integration and lawyer sign-off on insurance labelling.</p>
+    <p class="sub">Updated post team review session — v2. Subject to WinGold integration, AusPost API setup, and lawyer sign-off on insurance labelling.</p>
   </div>
   <div>
     <div class="badges">
-      <div class="hbadge"><div class="ht">System</div><div class="hv">WinGold + NAB</div></div>
+      <div class="hbadge"><div class="ht">Systems</div><div class="hv">WinGold + WooCommerce</div></div>
+      <div class="hbadge"><div class="ht">Banking</div><div class="hv">NAB (e-com account)</div></div>
       <div class="hbadge"><div class="ht">Payment</div><div class="hv">PayID + Bank Transfer</div></div>
       <div class="hbadge"><div class="ht">Payment Window</div><div class="hv">24 hrs customer / 26 hrs staff</div></div>
-      <div class="hbadge"><div class="ht">Free Storage</div><div class="hv">3 months with all orders</div></div>
+      <div class="hbadge"><div class="ht">Free Storage</div><div class="hv">3 months — all purchases</div></div>
+      <div class="hbadge"><div class="ht">Stores</div><div class="hv">Chermside · Brown Plains · Sunnybank</div></div>
     </div>
   </div>
 </div>
@@ -191,7 +162,7 @@ footer{text-align:center;margin-top:28px;color:#888;font-size:10.5px;}
   <div class="leg"><div class="ldot" style="background:#ce93d8"></div>Email Trigger</div>
 </div>
 
-<!-- ── PRE-ORDER: ACCOUNT + ORDER ─────────────────────────────── -->
+<!-- ── PHASE 1: ACCOUNT + ORDER ──────────────────────────────────── -->
 <div class="shared-section">
   <h2>PHASE 1 — Account Creation &amp; Order Placement (Shared — All Customers)</h2>
   <div class="step-row">
@@ -205,179 +176,465 @@ footer{text-align:center;margin-top:28px;color:#888;font-size:10.5px;}
   </div>
 </div>
 
-<!-- ── PAYMENT TIMELINE ────────────────────────────────────────── -->
+<!-- ── PHASE 2: PAYMENT TIMELINE ─────────────────────────────────── -->
 <div class="shared-section">
-  <h2>PHASE 2 — Payment Window (24 Hours Customer / 26 Hours Staff Grace)</h2>
+  <h2>PHASE 2 — Payment Window &amp; Escalation Sequence (24 Hrs Customer / 26 Hrs Staff)</h2>
   <div class="timeline">
     <div class="tl-item">
       <div class="tl-dot dot-blue">H0</div>
       <div class="tl-label">Order Placed</div>
-      <div class="tl-sub">Email Template 1 sent. 24-hour customer payment window starts.</div>
+      <div class="tl-sub">Template 1 sent. Payment window opens. Order ID = mandatory payment reference.</div>
     </div>
     <div class="tl-item">
       <div class="tl-dot dot-amber">H22</div>
-      <div class="tl-label">Reminder</div>
-      <div class="tl-sub">Auto reminder email + SMS sent if payment not yet received.</div>
+      <div class="tl-label">Early Reminder</div>
+      <div class="tl-sub">Auto email + SMS if payment not yet received. Bank details repeated. 2 hrs remaining.</div>
     </div>
     <div class="tl-item">
       <div class="tl-dot dot-green">H24</div>
       <div class="tl-label">Customer Deadline</div>
-      <div class="tl-sub">24-hour customer payment window closes. Staff begin verification.</div>
+      <div class="tl-sub">Window closes. If no payment: <strong>Template 8 (Friendly Reminder)</strong> fires automatically.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot dot-orange">H28</div>
+      <div class="tl-label">Urgent Reminder</div>
+      <div class="tl-sub">"URGENT" subject line. 4-hr final window. Market Loss Policy warning. If paid: send remittance proof.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot dot-red">H32+</div>
+      <div class="tl-label">Order Cancelled</div>
+      <div class="tl-sub">Cancellation email sent. Market Loss Policy invoked. WooCommerce + WinGold updated.</div>
     </div>
     <div class="tl-item">
       <div class="tl-dot dot-green">H26</div>
-      <div class="tl-label">Staff Grace Ends</div>
-      <div class="tl-sub">Staff have 26 hours total to verify payment against NAB. If verified: ORDER IN PROGRESS (Templates 2+3 merged).</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot dot-red">No Pay</div>
-      <div class="tl-label">Order Cancelled</div>
-      <div class="tl-sub">Market Loss Policy invoked. Email Template 8 sent. Order cancelled in WinGold.</div>
+      <div class="tl-label">Staff Verification</div>
+      <div class="tl-sub">Staff verify NAB (runs in parallel). AI agent auto-matches reference# to order#. If verified → ORDER IN PROGRESS.</div>
     </div>
     <div class="tl-item">
       <div class="tl-dot dot-purple">GBG</div>
       <div class="tl-label">KYC ($5,000+)</div>
-      <div class="tl-sub">For orders over $5,000: GBG greenID KYC triggered at verification. OTP only for under $5,000.</div>
+      <div class="tl-sub">Orders over $5,000: GBG greenID KYC at verification. OTP only for under $5,000.</div>
     </div>
   </div>
-  <div class="note blue">Payment methods: Bank transfer (PayID) only. Customer includes order number in payment reference. No remittance receipt required — staff verify directly against NAB records. Scanning/QR not supported (banking app security). 'Payment Received' and 'Payment Confirmed' statuses are MERGED into single: ORDER IN PROGRESS.</div>
+  <div class="note blue">Payment method: Bank transfer / PayID only. <strong>Order ID as payment reference is MANDATORY</strong> — enforced at checkout. AI agent uses this reference to auto-match payments. No match = no auto-verification. No remittance receipt required from customer — staff verify directly against NAB records. 'Payment Received' and 'Payment Confirmed' statuses MERGED into single: ORDER IN PROGRESS.</div>
 </div>
 
-<!-- ── THREE SWIMLANES ─────────────────────────────────────────── -->
+<!-- ── AI AGENT SECTION ───────────────────────────────────────────── -->
+<div class="agent-section">
+  <h2>🤖 AI Agent — NAB &harr; WooCommerce Payment Verification Middleware</h2>
+  <div class="agent-grid">
+    <div class="agent-card">
+      <div class="ac-icon">🏦</div>
+      <div class="ac-title">NAB Access</div>
+      <div class="ac-desc">Read-only access to dedicated e-commerce NAB account. Agent logs in, scans incoming transactions, extracts reference numbers and amounts.</div>
+      <div class="ac-tag">Read-Only</div>
+    </div>
+    <div class="agent-card">
+      <div class="ac-icon">🔗</div>
+      <div class="ac-title">Reference Matching</div>
+      <div class="ac-desc">Matches payment reference number to WooCommerce order ID. Order ID as reference is mandatory — no match means manual review required.</div>
+      <div class="ac-tag">Auto-Match</div>
+    </div>
+    <div class="agent-card">
+      <div class="ac-icon">🔄</div>
+      <div class="ac-title">WooCommerce Update</div>
+      <div class="ac-desc">On successful match: auto-updates WooCommerce order status to ORDER IN PROGRESS. Triggers Templates 2+3 (merged) confirmation email.</div>
+      <div class="ac-tag">Auto-Update</div>
+    </div>
+    <div class="agent-card">
+      <div class="ac-icon">⏱️</div>
+      <div class="ac-title">Run Schedule</div>
+      <div class="ac-desc">Runs on regular scheduled basis to check for new payments. Frequency to be configured. Complements end-of-day reconciliation already in place.</div>
+      <div class="ac-tag">Scheduled</div>
+    </div>
+    <div class="agent-card">
+      <div class="ac-icon">🏗️</div>
+      <div class="ac-title">Future: WinGold Integration</div>
+      <div class="ac-desc">Once WinGold API endpoints confirmed with Gorang: agent will also update WinGold directly on payment verification, removing manual dual-entry.</div>
+      <div class="ac-tag">Phase 2</div>
+    </div>
+    <div class="agent-card">
+      <div class="ac-icon">🏦</div>
+      <div class="ac-title">Dedicated E-Com Bank Account</div>
+      <div class="ac-desc">New separate NAB account to be opened exclusively for e-commerce orders. Isolates online payments from main account for cleaner reconciliation and tracking.</div>
+      <div class="ac-tag">Pending Setup</div>
+    </div>
+  </div>
+  <div class="agent-flow">
+    <div class="af-box">Customer Pays<br><span style="font-size:9px;color:#aaa;font-weight:400">Includes Order ID as ref</span></div>
+    <div class="af-arrow">→</div>
+    <div class="af-box">NAB E-Com Account<br><span style="font-size:9px;color:#aaa;font-weight:400">Dedicated account</span></div>
+    <div class="af-arrow">→</div>
+    <div class="af-box">AI Agent Scans<br><span style="font-size:9px;color:#aaa;font-weight:400">Reads transactions</span></div>
+    <div class="af-arrow">→</div>
+    <div class="af-box">Match Reference → Order<br><span style="font-size:9px;color:#aaa;font-weight:400">Auto or manual fallback</span></div>
+    <div class="af-arrow">→</div>
+    <div class="af-box">WooCommerce Updated<br><span style="font-size:9px;color:#aaa;font-weight:400">Order in Progress</span></div>
+    <div class="af-arrow">→</div>
+    <div class="af-box">WinGold Updated<br><span style="font-size:9px;color:#aaa;font-weight:400">Phase 2 — pending API</span></div>
+  </div>
+  <div class="agent-note">⚠️ <strong>Technical pre-requisites:</strong> Gagan to analyse AI agent permissions + NAB API access requirements. WooCommerce API credentials required. Comprehensive WinGold API endpoint access to be requested from Gorang/WinGold team to avoid repeated custom integration requests.</div>
+</div>
+
+<!-- ── SYSTEM INTEGRATION ROLES ──────────────────────────────────── -->
+<div class="shared-section">
+  <h2>System Integration — WooCommerce vs WinGold Role Split</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+    <div style="background:#e3f2fd;border:1.5px solid #1565c0;border-radius:9px;padding:14px 16px;">
+      <div style="font-size:12px;font-weight:800;color:#1565c0;margin-bottom:8px;">🛒 WooCommerce — Order Journey System</div>
+      <div style="font-size:10px;color:#333;line-height:1.7;">
+        • Full order fulfilment &amp; status tracking (source of truth for order journey)<br>
+        • Customer-facing status updates at every stage<br>
+        • Email template triggers at each order status change<br>
+        • AusPost tracking integration (via plugin + API)<br>
+        • All 3 fulfilment paths managed here (Delivery / Pickup / Storage)<br>
+        • Staff update status: In Progress → Dispatched → Delivered / Collected
+      </div>
+    </div>
+    <div style="background:#f3e5f5;border:1.5px solid #6a1b9a;border-radius:9px;padding:14px 16px;">
+      <div style="font-size:12px;font-weight:800;color:#4a148c;margin-bottom:8px;">💎 WinGold — Metal &amp; Accounting System</div>
+      <div style="font-size:10px;color:#333;line-height:1.7;">
+        • Transactional and accounting system for metal inventory<br>
+        • Only needs to know: <strong>(1)</strong> Pickup vs Delivery method, <strong>(2)</strong> When metal is delivered/collected<br>
+        • "Dispatched" in WooCommerce = "Metal Delivery Done" in WinGold<br>
+        • "Collected" in WooCommerce = "Metal Delivery Done" in WinGold<br>
+        • Storage: customer metal account, storage records, billing schedule<br>
+        • Future: WooCommerce "Out for Delivery" auto-triggers WinGold metal delivery
+      </div>
+    </div>
+  </div>
+  <div class="note amber" style="margin-top:12px;"><strong>Staff Dual-Update Requirement:</strong> For all delivery and pickup orders, staff must currently update <strong>both</strong> WooCommerce (order status) AND WinGold (metal delivery) manually. Future automation planned once WinGold API endpoints are confirmed.</div>
+</div>
+
+<!-- ── PHASE 3: THREE SWIMLANES ───────────────────────────────────── -->
 <div class="shared-section" style="padding:18px 22px 6px;">
   <h2>PHASE 3 — Fulfilment Branches (Customer Choice at Checkout)</h2>
 </div>
 
-<div class="swim-tabs" id="swimTabs">
-  <button class="swim-tab active-delivery" onclick="showSwim('delivery',this)">Delivery</button>
-  <button class="swim-tab" onclick="showSwim('pickup',this)">Pickup</button>
-  <button class="swim-tab" onclick="showSwim('storage',this)">Storage</button>
-</div>
-<div class="swimlane-container" id="swimContainer">
+<div class="swimlane-container">
 
   <!-- DELIVERY -->
-  <div class="swimlane delivery mobile-active" id="swim-delivery">
-    <div class="swim-head"><span class="swim-icon">Truck</span>Branch 1 — DELIVERY (Shipping)</div>
+  <div class="swimlane delivery">
+    <div class="swim-head"><span class="swim-icon">🚚</span>Branch 1 — DELIVERY (Shipping)</div>
     <div class="swim-body">
-      <div class="swim-step auto"><div class="swim-step-num">D1</div><div class="swim-step-title">Payment Verified → ORDER IN PROGRESS</div><div class="swim-step-desc">Email Templates 2+3 (merged) sent automatically. WinGold status updated.</div><span class="swim-email">Template 2+3</span><span class="swim-auto">Auto</span></div>
-      <div class="swim-step man"><div class="swim-step-num">D2</div><div class="swim-step-title">Pick &amp; Verify (Chermside)</div><div class="swim-step-desc">Retrieve from Chermside store. Verify product matches invoice EXACTLY — no substitutions.</div></div>
-      <div class="swim-step man"><div class="swim-step-num">D3</div><div class="swim-step-title">Security Packaging</div><div class="swim-step-desc">Plain, unmarked packaging. Contents not identifiable as precious metals on exterior.</div></div>
-      <div class="swim-step semi"><div class="swim-step-num">D4</div><div class="swim-step-title">Insurance — 0.5% Admin Charge</div><div class="swim-step-desc">Customer selected insurance at checkout? YES: add 0.5% as 'Admin Charges' on invoice (lawyer sign-off pending). NO: ship without. Orders over $100K: hand-to-hand delivery.</div></div>
-      <div class="swim-step man"><div class="swim-step-num">D5</div><div class="swim-step-title">Check: Full or Part Order?</div><div class="swim-step-desc">FULL: all items available — proceed. PART: ship available, note back-order. Email Template 4 for part dispatch.</div><span class="swim-email">Template 4 if part order</span></div>
-      <div class="swim-step crit"><div class="swim-step-num">D6</div><div class="swim-step-title">AusPost Express Post + Signature</div><div class="swim-step-desc">Express Post with Signature Required — MANDATORY. Never standard post. Keep lodgement receipt.</div></div>
-      <div class="swim-step auto"><div class="swim-step-num">D7</div><div class="swim-step-title">Email Template 5 — Dispatched</div><div class="swim-step-desc">Auto-send tracking details: courier, tracking number, estimated delivery date, tracking link. Update WinGold: DISPATCHED.</div><span class="swim-email">Template 5</span><span class="swim-auto">Auto</span></div>
-      <div class="swim-step auto"><div class="swim-step-num">D8</div><div class="swim-step-title">Email Template 7 — Delivered</div><div class="swim-step-desc">On delivery confirmation: send feedback request + social media links. WinGold status: DELIVERED.</div><span class="swim-email">Template 7</span><span class="swim-auto">Auto</span></div>
-      <div class="swim-step email-step"><div class="swim-step-num">D9</div><div class="swim-step-title">Offer 3 Months Free Storage</div><div class="swim-step-desc">Post-delivery follow-up: offer customer 3 months free storage. If accepted → Storage process (SOP-RO-007).</div><span class="swim-auto">Auto offer</span></div>
+
+      <div class="swim-step auto">
+        <div class="swim-step-num">D1</div>
+        <div class="swim-step-title">Payment Verified → ORDER IN PROGRESS</div>
+        <div class="swim-step-desc">AI agent or staff confirms payment. Templates 2+3 (merged) sent automatically.</div>
+        <div class="sys-tags"><span class="swim-woo">WooCommerce — status update</span><span class="swim-wg">WinGold — notified</span><span class="swim-auto">Auto</span><span class="swim-email">Template 2+3</span></div>
+      </div>
+
+      <div class="swim-step man">
+        <div class="swim-step-num">D2</div>
+        <div class="swim-step-title">Pick &amp; Verify at Designated Store</div>
+        <div class="swim-step-desc">Retrieve from designated store (Chermside, Brown Plains, or Sunnybank) based on customer selection and stock availability. Verify product matches invoice EXACTLY — no substitutions.</div>
+        <div class="sys-tags"><span class="swim-mtag">Manual — Staff</span></div>
+      </div>
+
+      <div class="swim-step man">
+        <div class="swim-step-num">D3</div>
+        <div class="swim-step-title">Security Packaging</div>
+        <div class="swim-step-desc">Plain, unmarked packaging. Contents not identifiable as precious metals on exterior.</div>
+        <div class="sys-tags"><span class="swim-mtag">Manual — Staff</span></div>
+      </div>
+
+      <div class="swim-step semi">
+        <div class="swim-step-num">D4</div>
+        <div class="swim-step-title">Insurance &amp; Delivery Fee</div>
+        <div class="swim-step-desc">Insurance: 0.5% admin charge if selected at checkout → add to invoice as 'Admin Charges' (lawyer sign-off pending). Orders over $100K: hand-to-hand delivery mandatory. Free delivery: orders above $500 (configurable — pending decision).</div>
+        <div class="sys-tags"><span class="swim-woo">WooCommerce — checkout setting</span><span class="swim-mtag">Manual — invoice check</span></div>
+      </div>
+
+      <div class="swim-step man">
+        <div class="swim-step-num">D5</div>
+        <div class="swim-step-title">Check: Full or Part Order?</div>
+        <div class="swim-step-desc">FULL: all items available — proceed to D6. PART: ship available items, note back-order, trigger Template 4.</div>
+        <div class="sys-tags"><span class="swim-mtag">Manual — Staff</span><span class="swim-woo">WooCommerce — part dispatch trigger</span><span class="swim-email">Template 4 if part order</span></div>
+      </div>
+
+      <div class="swim-step crit">
+        <div class="swim-step-num">D6</div>
+        <div class="swim-step-title">Lodge with AusPost — Express Post + Signature</div>
+        <div class="swim-step-desc">Express Post with Signature Required — MANDATORY. Never standard post. Keep lodgement receipt. WooCommerce AusPost plugin auto-maps order ID to tracking number via AusPost API — no manual entry needed.</div>
+        <div class="sys-tags"><span class="swim-mtag">Manual — lodge parcel</span><span class="swim-woo">WooCommerce — AusPost plugin</span></div>
+      </div>
+
+      <div class="swim-step auto">
+        <div class="swim-step-num">D7</div>
+        <div class="swim-step-title">Email Template 5 — Dispatched</div>
+        <div class="swim-step-desc">Auto-triggered when tracking number populated by AusPost plugin. Sends: courier, tracking number, estimated delivery, tracking link. Staff then marks both systems.</div>
+        <div class="sys-tags"><span class="swim-woo">WooCommerce — mark Dispatched</span><span class="swim-wg">WinGold — Metal Delivery Done</span><span class="swim-both">Update Both Systems</span><span class="swim-email">Template 5</span><span class="swim-auto">Auto</span></div>
+      </div>
+
+      <div class="swim-step auto">
+        <div class="swim-step-num">D8</div>
+        <div class="swim-step-title">Email Template 7 — Delivered</div>
+        <div class="swim-step-desc">On AusPost delivery confirmation: send feedback request + social media links. Order complete.</div>
+        <div class="sys-tags"><span class="swim-woo">WooCommerce — status: Delivered</span><span class="swim-email">Template 7</span><span class="swim-auto">Auto</span></div>
+      </div>
+
     </div>
   </div>
 
   <!-- PICKUP -->
-  <div class="swimlane pickup" id="swim-pickup">
-    <div class="swim-head"><span class="swim-icon">Store</span>Branch 2 — PICKUP (Click &amp; Collect)</div>
+  <div class="swimlane pickup">
+    <div class="swim-head"><span class="swim-icon">🏪</span>Branch 2 — PICKUP (Click &amp; Collect)</div>
     <div class="swim-body">
-      <div class="swim-step auto"><div class="swim-step-num">P1</div><div class="swim-step-title">Payment Verified → ORDER IN PROGRESS</div><div class="swim-step-desc">Email Templates 2+3 (merged) sent. Order prepared at selected store.</div><span class="swim-email">Template 2+3</span><span class="swim-auto">Auto</span></div>
-      <div class="swim-step man"><div class="swim-step-num">P2</div><div class="swim-step-title">Pick &amp; Prepare at Chosen Store</div><div class="swim-step-desc">Pick product and verify against invoice. Place in secure holding with order reference. In initial phase: Chermside only.</div></div>
-      <div class="swim-step auto"><div class="swim-step-num">P3</div><div class="swim-step-title">Email Template 6 — Ready for Pickup</div><div class="swim-step-desc">Notify customer: store address, pickup hours, required documents (ID + order confirmation + OTP). Update WinGold: READY FOR PICKUP.</div><span class="swim-email">Template 6</span><span class="swim-auto">Auto</span></div>
-      <div class="swim-step crit"><div class="swim-step-num">P4</div><div class="swim-step-title">Customer Arrives — OTP Identity Verification</div><div class="swim-step-desc">Customer must verify identity before product release. Method: OTP to registered mobile/email OR customer portal OTP confirmation. Sight photo ID — must match order name.</div></div>
-      <div class="swim-step man"><div class="swim-step-num">P5</div><div class="swim-step-title">Release Product + Sign Collection Form</div><div class="swim-step-desc">Hand over product. Customer signs collection form. Update WinGold: COLLECTED (date/time/staff name).</div></div>
-      <div class="swim-step email-step"><div class="swim-step-num">P6</div><div class="swim-step-title">Offer 3 Months Free Storage</div><div class="swim-step-desc">Inform customer of 3-month free storage offer for their purchase. If interested → Storage process (SOP-RO-007).</div><span class="swim-auto">At collection</span></div>
+
+      <div class="swim-step auto">
+        <div class="swim-step-num">P1</div>
+        <div class="swim-step-title">Payment Verified → ORDER IN PROGRESS</div>
+        <div class="swim-step-desc">AI agent or staff confirms payment. Templates 2+3 (merged) sent automatically. Order assigned to customer's chosen store.</div>
+        <div class="sys-tags"><span class="swim-woo">WooCommerce — status update</span><span class="swim-email">Template 2+3</span><span class="swim-auto">Auto</span></div>
+      </div>
+
+      <div class="swim-step man">
+        <div class="swim-step-num">P2</div>
+        <div class="swim-step-title">Pick &amp; Prepare at Chosen Store</div>
+        <div class="swim-step-desc">Pick product at customer's chosen store (Chermside, Brown Plains, or Sunnybank) based on stock. Verify against invoice. Place in secure holding with order reference.</div>
+        <div class="sys-tags"><span class="swim-mtag">Manual — Staff</span></div>
+      </div>
+
+      <div class="swim-step auto">
+        <div class="swim-step-num">P3</div>
+        <div class="swim-step-title">Email Template 6 — Ready for Pickup</div>
+        <div class="swim-step-desc">Notify customer: store address, pickup hours, required documents (Photo ID + order confirmation + OTP). WinGold notified of pickup method.</div>
+        <div class="sys-tags"><span class="swim-woo">WooCommerce — status: Ready for Pickup</span><span class="swim-wg">WinGold — pickup method noted</span><span class="swim-email">Template 6</span><span class="swim-auto">Auto</span></div>
+      </div>
+
+      <div class="swim-step crit">
+        <div class="swim-step-num">P4</div>
+        <div class="swim-step-title">Customer Arrives — OTP Identity Verification</div>
+        <div class="swim-step-desc">OTP sent to registered mobile or email. Staff verifies Photo ID — must match order name exactly. Future option: OTP via WinGold customer portal (once operational).</div>
+        <div class="sys-tags"><span class="swim-woo">WooCommerce — OTP trigger</span><span class="swim-mtag">Manual — ID check</span></div>
+      </div>
+
+      <div class="swim-step man">
+        <div class="swim-step-num">P5</div>
+        <div class="swim-step-title">Release Product + Sign Collection Form</div>
+        <div class="swim-step-desc">Hand over product. Customer signs collection form. Staff must update both systems immediately.</div>
+        <div class="sys-tags"><span class="swim-woo">WooCommerce — mark Collected</span><span class="swim-wg">WinGold — Metal Delivery Done</span><span class="swim-both">Update Both Systems</span><span class="swim-mtag">Manual — collection form</span></div>
+      </div>
+
     </div>
   </div>
 
   <!-- STORAGE -->
-  <div class="swimlane storage" id="swim-storage">
-    <div class="swim-head"><span class="swim-icon">Vault</span>Branch 3 — STORAGE (Vault at Checkout)</div>
+  <div class="swimlane storage">
+    <div class="swim-head"><span class="swim-icon">🏛️</span>Branch 3 — STORAGE (Vault at Checkout)</div>
     <div class="swim-body">
-      <div class="swim-step auto"><div class="swim-step-num">ST1</div><div class="swim-step-title">Payment Verified → Storage Workflow Triggered</div><div class="swim-step-desc">Order confirmed. WinGold automatically triggers Bailor-Bailee agreement generation workflow.</div><span class="swim-auto">Auto-trigger</span></div>
-      <div class="swim-step semi"><div class="swim-step-num">ST2</div><div class="swim-step-title">Determine Storage Type</div><div class="swim-step-desc">Serialised: specific serial/year — exact same item returned, ring-fenced, cannot be used in inventory. Un-serialised: equivalent returned, can be used in inventory if needed.</div></div>
-      <div class="swim-step auto"><div class="swim-step-num">ST3</div><div class="swim-step-title">Bailor-Bailee Agreement Generated + E-Signed</div><div class="swim-step-desc">WinGold generates agreement: item description, storage type, 3 months free + billing schedule, return conditions, insurance, liability. Sent to customer for e-signature.</div><span class="swim-auto">Auto-generate</span></div>
-      <div class="swim-step man"><div class="swim-step-num">ST4</div><div class="swim-step-title">Physical Storage in Vault</div><div class="swim-step-desc">Product received at Chermside. Serialised: ring-fenced dedicated area with individual label. Un-serialised: general allocated storage. Label: customer ref, storage ID, date in, type.</div></div>
-      <div class="swim-step auto"><div class="swim-step-num">ST5</div><div class="swim-step-title">WinGold Storage Record Created</div><div class="swim-step-desc">Customer metal account updated. Customer portal shows: item details, quantity held, current value, storage record. 3-month free period starts from this date.</div><span class="swim-auto">Auto</span></div>
-      <div class="swim-step auto"><div class="swim-step-num">ST6</div><div class="swim-step-title">Customer Storage Confirmation</div><div class="swim-step-desc">Send confirmation: portal login, storage reference, agreement copy, free period start/end dates, billing schedule.</div><span class="swim-auto">Auto</span></div>
-      <div class="swim-step email-step"><div class="swim-step-num">ST7</div><div class="swim-step-title">3 Months Free — Then Billing Begins</div><div class="swim-step-desc">WinGold tracks free period. Auto-reminder sent before billing begins. Billing: annually based on metal value (quarterly/half-yearly option).</div><span class="swim-email">Auto billing</span></div>
+
+      <div class="swim-step auto">
+        <div class="swim-step-num">ST1</div>
+        <div class="swim-step-title">Payment Verified → Storage Workflow Triggered</div>
+        <div class="swim-step-desc">Order confirmed. WinGold triggers Bailment Agreement generation workflow automatically.</div>
+        <div class="sys-tags"><span class="swim-woo">WooCommerce — order confirmed</span><span class="swim-wg">WinGold — workflow trigger</span><span class="swim-auto">Auto</span></div>
+      </div>
+
+      <div class="swim-step semi">
+        <div class="swim-step-num">ST2</div>
+        <div class="swim-step-title">Determine Storage Type</div>
+        <div class="swim-step-desc"><strong>Pool Allocated (Free tier):</strong> 3-month complimentary period — all purchases e-commerce &amp; counter.<br><strong>Un-serialised:</strong> GoldSecure-branded items. Equivalent returned. Lower fee after free period.<br><strong>Serialised:</strong> All non-GoldSecure products. Exact item ring-fenced, not used in inventory. Higher fee.</div>
+        <div class="sys-tags"><span class="swim-woo">WooCommerce — selected at checkout</span><span class="swim-wg">WinGold — storage type recorded</span></div>
+      </div>
+
+      <div class="swim-step auto">
+        <div class="swim-step-num">ST3</div>
+        <div class="swim-step-title">Bailment Agreement — Once Only + Appendix per Trade</div>
+        <div class="swim-step-desc"><strong>First-time:</strong> Full Bailor-Bailee Agreement auto-generated and sent for e-signature. Must be returned before metal is stored.<br><strong>Returning customers:</strong> No new agreement. New Appendix auto-generated and appended to existing master agreement with this transaction's details. Master agreement remains in force.</div>
+        <div class="sys-tags"><span class="swim-wg">WinGold — agreement generated</span><span class="swim-auto">Auto-generate</span></div>
+      </div>
+
+      <div class="swim-step man">
+        <div class="swim-step-num">ST4</div>
+        <div class="swim-step-title">Physical Storage in Vault (Chermside)</div>
+        <div class="swim-step-desc">Product received at Chermside vault. Serialised: ring-fenced area, individual label. Un-serialised: general allocated area. Label: customer ref, storage ID, date in, storage type.</div>
+        <div class="sys-tags"><span class="swim-mtag">Manual — Staff (physical placement)</span></div>
+      </div>
+
+      <div class="swim-step auto">
+        <div class="swim-step-num">ST5</div>
+        <div class="swim-step-title">WinGold Storage Record + Ledger Created</div>
+        <div class="swim-step-desc">Customer metal account updated. WinGold posts ledger entry allocated to this customer. Portal (once live): item details, quantity held, current value, storage record, free period dates.</div>
+        <div class="sys-tags"><span class="swim-wg">WinGold — ledger + metal account</span><span class="swim-auto">Auto</span></div>
+      </div>
+
+      <div class="swim-step auto">
+        <div class="swim-step-num">ST6</div>
+        <div class="swim-step-title">Customer Storage Confirmation Sent</div>
+        <div class="swim-step-desc">Send confirmation: portal login, storage reference, agreement/appendix copy, free period start/end dates, billing schedule.</div>
+        <div class="sys-tags"><span class="swim-wg">WinGold — sends confirmation</span><span class="swim-auto">Auto</span></div>
+      </div>
+
+      <div class="swim-step semi">
+        <div class="swim-step-num">ST7</div>
+        <div class="swim-step-title">Pre-Expiry Notification</div>
+        <div class="swim-step-desc">Auto-email before 3-month free period ends. Options: (a) withdraw metal — storage ends, or (b) continue storing — fees apply per type.</div>
+        <div class="sys-tags"><span class="swim-wg">WinGold — tracks free period</span><span class="swim-auto">Auto-email</span></div>
+      </div>
+
+      <div class="swim-step email-step">
+        <div class="swim-step-num">ST8</div>
+        <div class="swim-step-title">Quarterly Billing + Metal Holdings Statement</div>
+        <div class="swim-step-desc">After free period: WinGold calculates fee by type (serialised vs un-serialised rate). Fee invoice + metal holdings statement sent quarterly. Customer sees total metal held, current value, storage charges.</div>
+        <div class="sys-tags"><span class="swim-wg">WinGold — billing + statement</span><span class="swim-email">Quarterly billing</span></div>
+      </div>
+
     </div>
   </div>
 </div>
 
-<div class="note red"><strong>KEY RULES:</strong> Insurance = 0.5% admin charge (NOT 'insurance' on invoice until lawyer validates). Orders over $100,000 = hand-to-hand delivery. ALWAYS Express Post + Signature Required. NEVER standard post. Payment window = 24 hrs customer / 26 hrs staff. Market Loss Policy applies on cancellation.</div>
-<div class="note green" style="margin-top:8px"><strong>FREE STORAGE:</strong> 3 months free storage is offered across ALL three fulfilment branches — after delivery, at pickup, or as the primary choice. Requires WinGold implementation by Palani for the storage portal and billing automation.</div>
+<div class="note red"><strong>KEY RULES:</strong> Insurance = 0.5% admin charge (NOT 'insurance' on invoice until lawyer validates). Orders over $100,000 = hand-to-hand delivery. ALWAYS Express Post + Signature Required. NEVER standard post. Payment window = 24 hrs customer / 26 hrs staff. Market Loss Policy applies on cancellation. Order ID as payment reference = MANDATORY.</div>
+<div class="note green" style="margin-top:8px"><strong>FREE STORAGE — 3 TYPES:</strong> (1) <strong>Pool Allocated (Free)</strong> — 3-month complimentary period on every purchase, e-commerce and counter. (2) <strong>Un-serialised</strong> — GoldSecure branded items, lower fee after free period. (3) <strong>Serialised</strong> — all other (non-GoldSecure) products, higher fee, ring-fenced. Fees sent quarterly with metal holdings statement. Requires WinGold ledger configuration by Palani + customer portal build.</div>
+<div class="note purple" style="margin-top:8px"><strong>BAILMENT AGREEMENT — ONE-TIME SIGN + APPENDIX MODEL:</strong> The Bailor-Bailee Agreement is signed <strong>once only</strong> by the customer. Every subsequent purchase or trade that includes storage does <strong>not</strong> require a new agreement — instead, a new <strong>Appendix</strong> is generated and appended to the master agreement, capturing the details of that transaction (item, storage type, free period dates). The portal must store the master agreement + all appendices in one place and maintain a version history per customer.</div>
+<div class="note purple" style="margin-top:8px"><strong>STORAGE PORTAL REQUIREMENT:</strong> A dual-portal is needed: (1) <strong>Admin Portal</strong> — for staff to manage customer storage holdings, view master agreements + all appendices, trigger billing, handle withdrawals. (2) <strong>Customer Portal</strong> — for customers to view metal held, current value, storage records, and access their agreement + appendix history. WinGold is the backend; portal frontend to be built as part of the broader customer portal project.</div>
 
 <!-- ── EMAIL TEMPLATES ─────────────────────────────────────────── -->
 <div class="email-panel">
-  <h2>Customer Email Templates — All 8 Confirmed Templates</h2>
+  <h2>Customer Email Templates — Full Sequence (11 Templates)</h2>
   <div class="email-grid">
 
     <div class="email-card">
       <div class="email-card-head"><div class="en">Template 1</div><div class="et">Order Placed — Pending Payment</div><div class="es">Trigger: Order submitted</div></div>
-      <div class="email-card-body"><span class="email-trigger">Auto-triggered on order</span><br>Confirms order placed. Provides bank details (Account Name: GK GOLD CORPORATION PTY LTD, BSB: 084-034, Account: 23-298-5363, PayID: info@goldsecure.com.au). Instructs customer to add order ID as payment reference. States 24-hour payment window. Contact: orders@goldsecure.com.au</div>
+      <div class="email-card-body"><span class="email-trigger">Auto-triggered on order</span><br>Confirms order placed. Provides bank details (Account Name: GK GOLD CORPORATION PTY LTD, BSB: 084-034, Account: 23-298-5363, PayID: info@goldsecure.com.au). <strong>Order ID as payment reference is mandatory.</strong> States 24-hour payment window. References Market Loss Policy. Contact: orders@goldsecure.com.au</div>
     </div>
 
     <div class="email-card">
-      <div class="email-card-head"><div class="en">Templates 2 + 3 (MERGED)</div><div class="et">Payment Received — Order in Progress</div><div class="es">Trigger: Payment detected in NAB within 26 hrs</div></div>
-      <div class="email-card-body"><span class="email-trigger">Auto-triggered on payment verified</span><br>Confirms payment received. States team is verifying with bank. Mentions shipping/insurance details to follow. References Market Loss Policy. Note: 'Payment Received' and 'Payment Confirmed' statuses merged into this single communication per team decision.</div>
+      <div class="email-card-head"><div class="en">Templates 2 + 3 (MERGED)</div><div class="et">Payment Received — Order in Progress</div><div class="es">Trigger: Payment matched by AI agent or staff within 26 hrs</div></div>
+      <div class="email-card-body"><span class="email-trigger">Auto-triggered on payment verified</span><br>Confirms payment received and verified. States team is processing order. Mentions shipping/insurance details to follow. References Market Loss Policy. 'Payment Received' and 'Payment Confirmed' statuses merged into this single communication.</div>
     </div>
 
     <div class="email-card">
       <div class="email-card-head"><div class="en">Template 4</div><div class="et">Part Order Dispatched</div><div class="es">Trigger: Partial shipment only (stock split)</div></div>
-      <div class="email-card-body"><span class="email-trigger">Manual trigger on part dispatch</span><br>Lists dispatched items, tracking number, courier, estimated delivery. Notes remaining items being processed. All shipments securely packaged and insured. Orders up to $100,000.</div>
+      <div class="email-card-body"><span class="email-trigger">Manual trigger on part dispatch</span><br>Lists dispatched items, tracking number, courier, estimated delivery. Notes remaining items being processed. All shipments securely packaged and insured up to $100,000.</div>
     </div>
 
     <div class="email-card">
-      <div class="email-card-head"><div class="en">Template 5</div><div class="et">Order Dispatched — Tracking Details</div><div class="es">Trigger: Full order lodged at AusPost</div></div>
-      <div class="email-card-body"><span class="email-trigger">Auto-triggered on WinGold dispatch status</span><br>Courier name, tracking number, estimated delivery date, tracking link. Thank you message. Contact: orders@goldsecure.com.au</div>
+      <div class="email-card-head"><div class="en">Template 5</div><div class="et">Order Dispatched — Tracking Details</div><div class="es">Trigger: AusPost tracking number auto-populated via plugin</div></div>
+      <div class="email-card-body"><span class="email-trigger">Auto-triggered on dispatch status</span><br>Courier name, tracking number, estimated delivery date, tracking link. AusPost WooCommerce plugin populates tracking details automatically. Thank you message. Contact: orders@goldsecure.com.au</div>
     </div>
 
     <div class="email-card">
       <div class="email-card-head"><div class="en">Template 6</div><div class="et">Order Ready for Pickup</div><div class="es">Trigger: Order prepared at store</div></div>
-      <div class="email-card-body"><span class="email-trigger">Auto-triggered on READY FOR PICKUP status</span><br>Store address, pickup hours, required documents (ID + order confirmation email). Pickup window (number of days). OTP verification will be required on arrival.</div>
+      <div class="email-card-body"><span class="email-trigger">Auto-triggered on READY FOR PICKUP status</span><br>Store address (Chermside / Brown Plains / Sunnybank), pickup hours, required documents (Photo ID + order confirmation email). Pickup window stated. OTP verification required on arrival. WinGold notified of pickup readiness.</div>
     </div>
 
     <div class="email-card">
-      <div class="email-card-head"><div class="en">Template 7</div><div class="et">Order Delivered — Completion</div><div class="es">Trigger: Delivery confirmed</div></div>
+      <div class="email-card-head"><div class="en">Template 7</div><div class="et">Order Delivered — Completion</div><div class="es">Trigger: Delivery confirmed by AusPost</div></div>
       <div class="email-card-body"><span class="email-trigger">Auto-triggered on DELIVERED status</span><br>Delivery confirmation. Feedback request with review link. Social media links. Newsletter signup. Thank you message. Contact: orders@goldsecure.com.au</div>
     </div>
 
-    <div class="email-card">
-      <div class="email-card-head" style="background:#e53935;"><div class="en">Template 8</div><div class="et">Order Cancelled — Non-Payment</div><div class="es">Trigger: Hour 26, no payment verified</div></div>
-      <div class="email-card-body"><span class="email-trigger" style="background:#ffcdd2;color:#b71c1c;">Auto at Hour 26 — Market Loss Policy</span><br>Order cancelled due to non-payment within required timeframe. Market Loss Policy applied. Advises customer to contact immediately if in error: orders@goldsecure.com.au</div>
+    <div class="email-card" style="border-color:#ff8f00;">
+      <div class="email-card-head" style="background:#E67E22;"><div class="en">Template 8 — Friendly Reminder</div><div class="et">Payment Reminder — Awaiting Your Transfer</div><div class="es">Trigger: Hour 24 — customer deadline reached, no payment detected</div></div>
+      <div class="email-card-body"><span class="email-trigger" style="background:#fff3e0;color:#e65100;">Auto at Hour 24</span><br>Friendly reminder that payment has not been received. Repeats full bank details and order reference. States Market Loss Policy will apply if payment not received. <strong>Includes note: "If you have already made payment, please send your remittance / proof of transfer to orders@goldsecure.com.au immediately."</strong></div>
+    </div>
+
+    <div class="email-card" style="border-color:#d35400;">
+      <div class="email-card-head" style="background:#d35400;"><div class="en">Urgent Reminder</div><div class="et">⚠️ URGENT — Final 4 Hours to Complete Payment</div><div class="es">Trigger: After Template 8, if still no payment</div></div>
+      <div class="email-card-body"><span class="email-trigger" style="background:#fbe9e7;color:#bf360c;">Auto — approx H28</span><br>Subject line contains "URGENT" in capitals. States this is the final 4-hour window before order cancellation. Market Loss Policy will apply. Instructs customer to send remittance proof immediately if payment already made. Contact: orders@goldsecure.com.au</div>
+    </div>
+
+    <div class="email-card" style="border-color:#c62828;">
+      <div class="email-card-head" style="background:#c62828;"><div class="en">Order Cancellation</div><div class="et">Order Cancelled — Non-Payment</div><div class="es">Trigger: No payment after Urgent Reminder window expires</div></div>
+      <div class="email-card-body"><span class="email-trigger" style="background:#ffcdd2;color:#b71c1c;">Auto — Market Loss Policy invoked</span><br>Order cancelled due to non-payment within the required timeframe. Market Loss Policy applied. Advises customer to contact immediately if they believe payment was made in error: orders@goldsecure.com.au</div>
     </div>
 
     <div class="email-card" style="border-color:#ff8f00;">
-      <div class="email-card-head" style="background:#ff8f00;"><div class="en">Reminder (Hour 22)</div><div class="et">Payment Reminder — Email + SMS</div><div class="es">Trigger: Hour 22, payment not yet received</div></div>
-      <div class="email-card-body"><span class="email-trigger" style="background:#fff3e0;color:#e65100;">Auto at Hour 22</span><br>Friendly reminder that order is awaiting payment. Repeats bank details and order reference. Advises that order will be cancelled if payment is not received within 2 hours. SMS also sent to registered mobile.</div>
+      <div class="email-card-head" style="background:#ff8f00;"><div class="en">H22 Early Reminder</div><div class="et">Payment Reminder — Email + SMS</div><div class="es">Trigger: Hour 22, payment not yet received (within window)</div></div>
+      <div class="email-card-body"><span class="email-trigger" style="background:#fff3e0;color:#e65100;">Auto at Hour 22 + SMS</span><br>Friendly reminder that order is awaiting payment. Repeats bank details and order reference. States 2 hours remaining in payment window. SMS also sent to registered mobile number.</div>
     </div>
 
+    <div class="email-card" style="border-color:#4a148c;">
+      <div class="email-card-head" style="background:#4a148c;"><div class="en">Storage Pre-Expiry</div><div class="et">Free Storage Period Ending Soon</div><div class="es">Trigger: Before 3-month free storage expires</div></div>
+      <div class="email-card-body"><span class="email-trigger" style="background:#f3e5f5;color:#6a1b9a;">Auto — before expiry date</span><br>Notifies customer their 3-month complimentary storage period is ending. Option A: withdraw metal — storage ends, instructions provided. Option B: continue storing — fees will be applied per rate schedule (serialised or un-serialised). Includes metal holdings summary.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── OUTSTANDING DECISIONS ──────────────────────────────────────── -->
+<div class="outstanding-panel">
+  <h2>⚠️ Outstanding Decisions &amp; Pending Actions</h2>
+  <div class="oi-grid">
+    <div class="oi-card">
+      <div class="oi-icon">🏦</div>
+      <div class="oi-title">New E-Commerce Bank Account</div>
+      <div class="oi-desc">Open dedicated NAB account for online orders only. Separates e-commerce payments from main account. Streamlines reconciliation. Action: Gagan / accounts team to set up.</div>
+      <div class="oi-badge">Action Required</div>
+    </div>
+    <div class="oi-card">
+      <div class="oi-icon">🤖</div>
+      <div class="oi-title">AI Agent Technical Setup</div>
+      <div class="oi-desc">Gagan to analyse AI agent permissions, NAB access requirements, and WooCommerce API setup. Determine run schedule frequency.</div>
+      <div class="oi-badge">Gagan — Action</div>
+    </div>
+    <div class="oi-card">
+      <div class="oi-icon">🛒</div>
+      <div class="oi-title">Meet E-Commerce Development Company</div>
+      <div class="oi-desc">Schedule meeting with e-commerce dev company to understand current WooCommerce build before finalising integration specifications.</div>
+      <div class="oi-badge">Schedule Meeting</div>
+    </div>
+    <div class="oi-card">
+      <div class="oi-icon">🔌</div>
+      <div class="oi-title">WinGold API Access (Gorang)</div>
+      <div class="oi-desc">Request comprehensive API endpoint access from Gorang / WinGold team. Goal: enable all future integrations without repeated custom requests per use case.</div>
+      <div class="oi-badge">Raise with Gorang</div>
+    </div>
+    <div class="oi-card">
+      <div class="oi-icon">📮</div>
+      <div class="oi-title">AusPost API Developer Access</div>
+      <div class="oi-desc">Request AusPost API developer access for delivery tracking integration. Also research and configure WooCommerce AusPost plugin to auto-map order IDs to tracking numbers.</div>
+      <div class="oi-badge">Team — Action</div>
+    </div>
+    <div class="oi-card">
+      <div class="oi-icon">⏰</div>
+      <div class="oi-title">Reminder Timing (H22 + Others)</div>
+      <div class="oi-desc">Exact timing for all auto reminder emails and SMS during the 24-hour payment window still to be determined. H22 confirmed; additional touchpoints TBD.</div>
+      <div class="oi-badge">TBD</div>
+    </div>
+    <div class="oi-card">
+      <div class="oi-icon">🚚</div>
+      <div class="oi-title">Free Delivery Threshold</div>
+      <div class="oi-desc">Free delivery for orders above $500 under consideration. Amount is configurable. Final decision and system configuration pending.</div>
+      <div class="oi-badge">Decision Pending</div>
+    </div>
+    <div class="oi-card">
+      <div class="oi-icon">🛡️</div>
+      <div class="oi-title">Free Insurance Option</div>
+      <div class="oi-desc">Free insurance being considered as market penetration strategy. To be confirmed by management before implementing at checkout.</div>
+      <div class="oi-badge">Decision Pending</div>
+    </div>
+    <div class="oi-card">
+      <div class="oi-icon">🏪</div>
+      <div class="oi-title">Storage Offer: Checkout vs Post-Delivery</div>
+      <div class="oi-desc">Team considering moving the 3-month free storage offer to the checkout stage rather than post-delivery/pickup, to improve conversion. Decision outstanding.</div>
+      <div class="oi-badge">Decision Pending</div>
+    </div>
+    <div class="oi-card">
+      <div class="oi-icon">👤</div>
+      <div class="oi-title">Dedicated E-Commerce Operations Person</div>
+      <div class="oi-desc">Team may need to assign one staff member to oversee daily e-commerce operations (order monitoring, payment verification, dispatch coordination).</div>
+      <div class="oi-badge">Assign Person</div>
+    </div>
+    <div class="oi-card">
+      <div class="oi-icon">🏛️</div>
+      <div class="oi-title">Storage Portal Build</div>
+      <div class="oi-desc">Admin portal (staff) and Customer portal (client) required for storage management. WinGold backend; portal frontend to be built as part of broader customer portal project. Palani to advise on WinGold ledger configuration.</div>
+      <div class="oi-badge">Build Required</div>
+    </div>
+    <div class="oi-card">
+      <div class="oi-icon">✉️</div>
+      <div class="oi-title">Email Templates — Final Updates</div>
+      <div class="oi-desc">Add storage requirements to template document. Add urgent payment reminder template. Send updated templates to Palani (CC Sukha and Gagan). Schedule Teams meeting with Palani to review.</div>
+      <div class="oi-badge">Team — Action</div>
+    </div>
   </div>
 </div>
 
 <div class="note amber"><strong>COMPETITOR INSIGHTS:</strong> Account mandatory to place order (confirmed). Multiple account options. ID details mandatory for account creation. These align with GoldSecure's confirmed account-first approach.</div>
 
-<footer>GK Gold Corporation Pty Ltd &nbsp;·&nbsp; E-Commerce Fulfilment Journey &nbsp;·&nbsp; May 2026 &nbsp;·&nbsp; Prepared by Abhay Khurana &nbsp;·&nbsp; For internal use only</footer>
-
-
-<script>
-function showSwim(id, btn) {
-  // Only apply on mobile
-  if (window.innerWidth > 768) return;
-  document.querySelectorAll('.swimlane').forEach(s => s.classList.remove('mobile-active'));
-  document.getElementById('swim-' + id).classList.add('mobile-active');
-  document.querySelectorAll('.swim-tab').forEach(t => {
-    t.className = 'swim-tab';
-  });
-  btn.className = 'swim-tab active-' + id;
-}
-// Ensure correct state on resize
-window.addEventListener('resize', function() {
-  if (window.innerWidth > 768) {
-    document.querySelectorAll('.swimlane').forEach(s => s.classList.remove('mobile-active'));
-  } else {
-    const active = document.querySelector('.swim-tab.active-delivery, .swim-tab.active-pickup, .swim-tab.active-storage');
-    if (!document.querySelector('.swimlane.mobile-active')) {
-      document.getElementById('swim-delivery').classList.add('mobile-active');
-    }
-  }
-});
-</script>
+<footer>GK Gold Corporation Pty Ltd &nbsp;·&nbsp; E-Commerce Fulfilment Journey &nbsp;·&nbsp; v2 — May 2026 &nbsp;·&nbsp; Prepared by Abhay Khurana &nbsp;·&nbsp; For internal use only</footer>
 
 </body>
 </html>
